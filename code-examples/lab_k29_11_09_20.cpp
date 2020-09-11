@@ -68,33 +68,56 @@ public:
     void print() {
     	std::cout<<data<<std::endl;
     }
+
+    friend string twice( string& value);
+    friend string twice( string&& value);
 };
 
 string helloworld() {
 	return "hello world";
 }
 
+// string twice(string& value)  // works, but requires copy constructor in some cases
+
+string twice(string& value) {
+	std::cout<<"twice& "<<value.data<<std::endl;
+	return value + value;
+}
+
+string twice(string&& value) {
+	std::cout<<"twice&& "<<value.data<<std::endl;
+	return value + value;
+}
+
+
 
 int main() {
-//	std::cout<<"constructing and copying"<<std::endl;
-//	string my_string {"hello world"};
-//	string copy = my_string;
-//	copy = my_string;
-//	copy.print();
+	std::cout<<"constructing and copying"<<std::endl;
+	string my_string {"hello world"};
+	string copy = my_string;
+	copy = my_string;
+	copy.print();
 
 	std::cout<<"concat"<<std::endl;
 	string hello {"hello"};
 	//string world {"world"};
 	string hw = hello + "world";
+	std::cout<<"hw constructed"<<std::endl;
 	hw.print();
-//	std::cout<<"function"<<std::endl;
-//	helloworld().print();
-//	(helloworld()+"!").print();
-//
-//	std::cout<<"constucting from temporary"<<std::endl;
-//	string hw2{helloworld()};
-//	hw2.print();
-	//std::cout<<my_string<<std::endl;
+
+	std::cout<<"function"<<std::endl;
+	helloworld().print();
+	(helloworld()+"!").print();
+
+	std::cout<<"constructing from temporary"<<std::endl;
+	string hw2{helloworld()};
+	hw2.print();
+
+	std::cout<<"calling function and passing string"<<std::endl;
+	twice(hello).print();
+	twice("world").print();
+	twice(hello+" world ").print();
+
 	return 0;
 }
 
