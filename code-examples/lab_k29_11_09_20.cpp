@@ -52,7 +52,7 @@ public:
     	return *this;
     }
 
-    string operator+(string& second) {
+    string operator+(const string& second) {
     	char* buf = new char[std::strlen(this->data) +
     						std::strlen(second.data) + 1];
     	std::memcpy(buf, this->data, std::strlen(this->data));
@@ -74,8 +74,8 @@ int main() {
 	copy.print();
 
 	string hello {"hello"};
-	string world {"world"};
-	string hw = hello + world;
+	//string world {"world"};
+	string hw = hello + "world";
 	hw.print();
 	//std::cout<<my_string<<std::endl;
 	return 0;
