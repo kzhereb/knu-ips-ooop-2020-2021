@@ -12,6 +12,7 @@ public:
 
 	string() {
 		std::cout<<"default ctor"<<std::endl;
+		data = nullptr;
 	}
 
     string(const char* p)
@@ -117,6 +118,15 @@ int main() {
 	twice(hello).print();
 	twice("world").print();
 	twice(hello+" world ").print();
+
+	string empty;
+	(hello+"!").print();
+	// (empty+"!").print(); // runtime error
+	string empty2{"will be empty"};
+	empty2.print();
+	string nonempty2{std::move(empty2)};
+	nonempty2.print();
+	// empty2.print(); // runtime error
 
 	return 0;
 }
