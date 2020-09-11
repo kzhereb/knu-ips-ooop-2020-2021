@@ -9,6 +9,8 @@
 #include <vector>
 using namespace std;
 
+namespace lecture2_08_09_20 {
+
 class Obj {
 public:
 	int val;
@@ -84,6 +86,7 @@ int main() {
 	return 0;
 }
 
+}
 
 
 
