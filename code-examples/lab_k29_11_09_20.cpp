@@ -16,7 +16,7 @@ public:
 
     string(const char* p)
     {
-    	std::cout<<"ctor"<<std::endl;
+    	std::cout<<"ctor "<<p<<std::endl;
         size_t size = std::strlen(p) + 1;
         data = new char[size];
         std::memcpy(data, p, size);
@@ -24,13 +24,13 @@ public:
 
     ~string()
     {
-    	std::cout<<"dtor"<<std::endl;
+    	std::cout<<"dtor "<<this->data<<std::endl;
         delete[] data;
     }
 
     string(const string& that)
     {
-    	std::cout<<"copy"<<std::endl;
+    	std::cout<<"copy "<< that.data<<std::endl;
         size_t size = std::strlen(that.data) + 1;
         data = new char[size];
         std::memcpy(data, that.data, size);
@@ -38,13 +38,13 @@ public:
 
     string(string&& that)   // string&& is an rvalue reference to a string
     {
-    	std::cout<<"move"<<std::endl;
+    	std::cout<<"move "<<that.data<<std::endl;
         data = that.data;
         that.data = nullptr;
     }
 
     string& operator=(const string& that) {
-    	std::cout<<"assign"<<std::endl;
+    	std::cout<<"assign "<<that.data<<std::endl;
     	delete [] data;
     	size_t size = std::strlen(that.data) + 1;
         data = new char[size];
@@ -53,6 +53,7 @@ public:
     }
 
     string operator+(const string& second) {
+    	std::cout<<"plus("<<this->data<<","<<second.data<<")"<<std::endl;
     	char* buf = new char[std::strlen(this->data) +
     						std::strlen(second.data) + 1];
     	std::memcpy(buf, this->data, std::strlen(this->data));
