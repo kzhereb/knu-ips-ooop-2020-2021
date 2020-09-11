@@ -24,8 +24,12 @@ public:
 
     ~string()
     {
-    	std::cout<<"dtor "<<this->data<<std::endl;
-        delete[] data;
+    	if (this->data) {
+			std::cout<<"dtor "<<this->data<<std::endl;
+			delete[] data;
+    	} else {
+    		std::cout<<"dtor for empty data"<<std::endl;
+    	}
     }
 
     string(const string& that)
@@ -41,6 +45,7 @@ public:
     	std::cout<<"move "<<that.data<<std::endl;
         data = that.data;
         that.data = nullptr;
+        //std::cout<<"moved"<<std::endl;
     }
 
     string& operator=(const string& that) {
@@ -60,24 +65,35 @@ public:
     	return std::strcat(buf,second.data);
     }
 
-
-
     void print() {
     	std::cout<<data<<std::endl;
     }
 };
 
+string helloworld() {
+	return "hello world";
+}
+
 
 int main() {
-	string my_string {"hello world"};
-	string copy = my_string;
-	copy = my_string;
-	copy.print();
+//	std::cout<<"constructing and copying"<<std::endl;
+//	string my_string {"hello world"};
+//	string copy = my_string;
+//	copy = my_string;
+//	copy.print();
 
+	std::cout<<"concat"<<std::endl;
 	string hello {"hello"};
 	//string world {"world"};
 	string hw = hello + "world";
 	hw.print();
+//	std::cout<<"function"<<std::endl;
+//	helloworld().print();
+//	(helloworld()+"!").print();
+//
+//	std::cout<<"constucting from temporary"<<std::endl;
+//	string hw2{helloworld()};
+//	hw2.print();
 	//std::cout<<my_string<<std::endl;
 	return 0;
 }
