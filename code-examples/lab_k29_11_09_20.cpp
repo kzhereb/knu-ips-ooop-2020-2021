@@ -92,7 +92,7 @@ string twice(string&& value) {
 
 
 
-int main() {
+int main(int argc, char** argv) {
 	std::cout<<"constructing and copying"<<std::endl;
 	string my_string {"hello world"};
 	string copy = my_string;

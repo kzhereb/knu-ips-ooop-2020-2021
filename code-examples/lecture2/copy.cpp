@@ -77,7 +77,7 @@ void test_shallowcopy() {
 }
 
 
-int main() {
+int main(int argc, char** argv) {
 	// your code goes here
 	test_deepcopy();
 	test_reference();
