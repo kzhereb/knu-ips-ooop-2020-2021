@@ -10,7 +10,7 @@ namespace current_ns {
 	int main();
 }
 
-int main() {
+int main_1() {
 	return current_ns::main();
 }
 
