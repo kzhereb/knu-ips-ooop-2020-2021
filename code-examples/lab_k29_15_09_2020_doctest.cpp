@@ -7,9 +7,13 @@
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
+#include <cassert>
 
 
-int factorial(int number) { return number <= 1 ? 1 : factorial(number - 1) * number; }
+int factorial(int number) {
+	assert(number>=0);
+	return number <= 1 ? 1 : factorial(number - 1) * number;
+}
 
 TEST_CASE("testing the factorial function") {
 	CHECK(factorial(0) == 1);
