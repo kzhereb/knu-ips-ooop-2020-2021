@@ -4,7 +4,7 @@
  *  Created on: Sep 15, 2020
  *      Author: KZ
  */
-
+#ifdef CATCH_ENABLED
 //#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
 #include <vector>
@@ -53,3 +53,4 @@ TEST_CASE( "vectors can be sized and resized", "[vector]" ) {
         REQUIRE( v.capacity() >= 5 );
     }
 }
+#endif

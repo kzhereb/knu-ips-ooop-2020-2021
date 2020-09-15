@@ -4,7 +4,7 @@
  *  Created on: Sep 15, 2020
  *      Author: KZ
  */
-
+#ifdef CATCH_ENABLED
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 
@@ -20,5 +20,5 @@ int main( int argc, char** argv ) {
   return result;
 }
 }
-
+#endif
 
