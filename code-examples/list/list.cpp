@@ -8,6 +8,8 @@
 #include "../doctest.h"
 
 #include <cstddef>
+#include <ostream>
+#include <iostream>
 
 struct ListNode {
 	int value;
@@ -49,6 +51,18 @@ struct DoublyLinkedList {
 		return result;
 	}
 };
+
+
+std::ostream& operator<<(std::ostream& out, const DoublyLinkedList& list) {
+	ListNode* current = list.begin;
+	out<<"[ ";
+	while(current) {
+		out << current->value << " ";
+		current = current->next;
+	}
+	out<<"]";
+	return out;
+}
 
 TEST_CASE("[list] - creating list nodes") {
 	ListNode node{123};
@@ -93,6 +107,8 @@ TEST_CASE("[list] - creating doubly-linked list") {
 		CHECK(list.end->next == nullptr);
 
 		CHECK(list.size() == 2);
+
+		std::cout<<list<<std::endl;
 
 	}
 }
