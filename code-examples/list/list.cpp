@@ -11,8 +11,8 @@ struct ListNode {
 	int value;
 	ListNode* prev;
 	ListNode* next;
-	ListNode(int value): value{value} {}
-	ListNode(int value, ListNode* prev, ListNode* next): value{value}, prev{prev}, next{next} {}
+
+	ListNode(int value, ListNode* prev=nullptr, ListNode* next=nullptr): value{value}, prev{prev}, next{next} {}
 };
 
 TEST_CASE("[list] - creating list nodes") {
