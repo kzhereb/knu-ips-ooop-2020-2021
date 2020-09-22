@@ -73,5 +73,12 @@ TEST_CASE("Rational constants") {
 
 	CHECK(Rational::zero.get_numerator() == 0);
 	CHECK(Rational::zero.get_denominator() == 1);
+
+	// static fields and methods can also be called from instance
+	CHECK(zero1.zero.get_numerator() == 0);
+	CHECK(zero1.zero.get_denominator() == 1);
+
+	// but they are not stored in each instance - sizeof only includes instance fields
+	CHECK(sizeof(Rational) == 2*sizeof(int));
 }
 
