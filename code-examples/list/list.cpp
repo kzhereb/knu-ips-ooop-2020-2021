@@ -28,12 +28,7 @@ struct DoublyLinkedList {
 	DoublyLinkedList(): begin{nullptr}, end{nullptr}, _size{0} {}
 
 	~DoublyLinkedList() {
-		ListNode* current = begin;
-		while(current) {
-			ListNode* to_delete = current;
-			current = current->next;
-			delete to_delete;
-		}
+		this->clear();
 	}
 
 	void append(int value) {
@@ -46,6 +41,17 @@ struct DoublyLinkedList {
 			end = new_node;
 		}
 		_size++;
+	}
+
+	void clear() {
+		ListNode* current = begin;
+		while(current) {
+			ListNode* to_delete = current;
+			current = current->next;
+			delete to_delete;
+		}
+		begin = end = nullptr;
+		_size = 0;
 	}
 
 	int operator[](std::size_t index) {
@@ -151,7 +157,13 @@ TEST_CASE("[list] - creating doubly-linked list") {
 
 		CHECK_THROWS_WITH_AS(list[2],"index=2 larger than list size=2",std::out_of_range);
 
-
+		SUBCASE("clear list") {
+			list.clear();
+			CHECK(list.size()==0);
+			list.append(789);
+			CHECK(list.size()==1);
+			CHECK(list[0]==789);
+		}
 
 	}
 }
