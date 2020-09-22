@@ -27,6 +27,11 @@ public:
 	}
 
 	static const Rational zero;
+	static int GCD(int a, int b) {
+		// this->zero; //this is unavailable in static methods
+		// Rational::zero; //static fields are available
+		return b ? GCD (b, a % b) : a;
+	}
 };
 
 const Rational Rational::zero{0,1};
@@ -82,3 +87,10 @@ TEST_CASE("Rational constants") {
 	CHECK(sizeof(Rational) == 2*sizeof(int));
 }
 
+TEST_CASE("Static methods") {
+	CHECK(Rational::GCD(10, 15) == 5);
+	CHECK(Rational::GCD(10, 17) == 1);
+	CHECK(Rational::GCD(0, 17) == 17);
+	CHECK(Rational::GCD(17, 0) == 17);
+	CHECK(Rational::GCD(0, 0) == 0);
+}
