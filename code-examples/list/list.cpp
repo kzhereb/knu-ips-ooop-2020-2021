@@ -11,6 +11,7 @@
 #include <ostream>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 
 struct ListNode {
 	int value;
@@ -36,6 +37,19 @@ struct DoublyLinkedList {
 			end = new_node;
 		}
 		_size++;
+	}
+
+	int operator[](std::size_t index) {
+		ListNode* current = begin;
+		std::size_t cur_index = 0;
+		while(current) {
+			if (cur_index == index) {
+				return current->value;
+			}
+			current = current->next;
+			cur_index++;
+		}
+		throw std::out_of_range{"index="+std::to_string(index)+" larger than list size="+std::to_string(_size)};
 	}
 
 	std::size_t size() {
@@ -114,6 +128,15 @@ TEST_CASE("[list] - creating doubly-linked list") {
 			s_out<<list;
 			CHECK(s_out.str()=="[ 123 456 ]");
 		} // to keep s_out in local scope
+
+		CHECK(list[0]==123);
+		CHECK(list[1]==456);
+		try {
+			int result = list[2];
+		} catch(const std::out_of_range& ex) {
+			CHECK(std::string(ex.what()) == "index=2 larger than list size=2");
+		}
+
 
 
 	}
