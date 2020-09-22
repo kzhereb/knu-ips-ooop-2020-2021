@@ -19,11 +19,18 @@ TEST_CASE("[list] - creating list nodes") {
 	ListNode node{123};
 	CHECK(node.value == 123);
 
-	ListNode node2{456, &node, nullptr};
-	CHECK(node2.value == 456);
-	CHECK(node2.prev == &node);
-	CHECK(node2.prev->value == 123);
-	CHECK(node2.next == nullptr);
+	ListNode* node2;
+	SUBCASE("constructor with 3 arguments") {
+		node2 = new ListNode{456, &node, nullptr};
+	}
+	SUBCASE("constructor with 2 arguments") {
+		node2 = new ListNode{456, &node};
+	}
+
+	CHECK(node2->value == 456);
+	CHECK(node2->prev == &node);
+	CHECK(node2->prev->value == 123);
+	CHECK(node2->next == nullptr);
 
 }
 
