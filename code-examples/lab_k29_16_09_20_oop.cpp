@@ -9,6 +9,7 @@
 #include <stdexcept>
 
 
+
 class Rational {
 	int numerator;
 	int denominator;
@@ -16,8 +17,8 @@ public:
 	Rational(): numerator{0}, denominator{1} {}
 	Rational(int numerator, int denominator): numerator{numerator}, denominator{denominator} {}
 
-	int get_numerator() {return numerator;}
-	int get_denominator() {return denominator;}
+	int get_numerator() const {return numerator;}
+	int get_denominator() const {return denominator;}
 	void set_numerator(int numerator) { this->numerator = numerator; }
 	void set_denominator(int denominator) {
 		if (denominator == 0) {
@@ -26,6 +27,8 @@ public:
 		this->denominator = denominator;
 	}
 };
+
+const Rational zero{0,1};
 
 TEST_CASE("Rational numbers") {
 	Rational q{10,11};
@@ -51,5 +54,18 @@ TEST_CASE("Rational numbers") {
 		CHECK(q.get_numerator()==10);
 		CHECK(q.get_denominator()==11);
 	}
+}
+
+TEST_CASE("Rational constants") {
+	Rational zero1{0,1}, zero2{0,1};
+	CHECK(&zero1 != &zero2);
+
+	CHECK(zero1.get_numerator() == 0);
+	CHECK(zero1.get_denominator() == 1);
+	CHECK(zero2.get_numerator() == 0);
+	CHECK(zero2.get_denominator() == 1);
+
+	CHECK(zero.get_numerator() == 0);
+	CHECK(zero.get_denominator() == 1);
 }
 
