@@ -20,7 +20,8 @@ struct ListNode {
 struct DoublyLinkedList {
 	ListNode* begin;
 	ListNode* end;
-	DoublyLinkedList(): begin{nullptr}, end{nullptr} {}
+	std::size_t _size;
+	DoublyLinkedList(): begin{nullptr}, end{nullptr}, _size{0} {}
 
 	void append(int value) {
 		ListNode* new_node = new ListNode{value};
@@ -31,9 +32,14 @@ struct DoublyLinkedList {
 			end->next = new_node;
 			end = new_node;
 		}
+		_size++;
 	}
 
 	std::size_t size() {
+		return _size;
+	}
+
+	std::size_t size_naive() {
 		std::size_t result = 0;
 		ListNode* current = begin;
 		while(current) {
