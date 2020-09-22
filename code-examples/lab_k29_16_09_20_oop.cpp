@@ -94,3 +94,15 @@ TEST_CASE("Static methods") {
 	CHECK(Rational::GCD(17, 0) == 17);
 	CHECK(Rational::GCD(0, 0) == 0);
 }
+
+class Empty {
+public:
+	static const int zero;
+};
+const int Empty::zero = 0;
+
+TEST_CASE("Empty class") {
+	CHECK(Empty::zero==0);
+	CHECK(sizeof(Empty) > 0);
+	WARN(sizeof(Empty) == 1); // not required?
+}
