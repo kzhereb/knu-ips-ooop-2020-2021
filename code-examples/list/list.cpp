@@ -133,6 +133,7 @@ TEST_CASE("[list] - creating doubly-linked list") {
 		CHECK(list[1]==456);
 		try {
 			int result = list[2];
+			CHECK(result); // not called
 		} catch(const std::out_of_range& ex) {
 			CHECK(std::string(ex.what()) == "index=2 larger than list size=2");
 		}
