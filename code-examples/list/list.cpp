@@ -7,6 +7,8 @@
 
 #include "../doctest.h"
 
+#include <cstddef>
+
 struct ListNode {
 	int value;
 	ListNode* prev;
@@ -29,6 +31,16 @@ struct DoublyLinkedList {
 			end->next = new_node;
 			end = new_node;
 		}
+	}
+
+	std::size_t size() {
+		std::size_t result = 0;
+		ListNode* current = begin;
+		while(current) {
+			result++;
+			current = current->next;
+		}
+		return result;
 	}
 };
 
@@ -54,6 +66,7 @@ TEST_CASE("[list] - creating doubly-linked list") {
 	DoublyLinkedList list;
 	CHECK(list.begin == nullptr);
 	CHECK(list.end == nullptr);
+	CHECK(list.size() == 0);
 
 	SUBCASE("append element") {
 		list.append(123);
@@ -61,6 +74,7 @@ TEST_CASE("[list] - creating doubly-linked list") {
 		CHECK(list.begin->value == 123);
 		CHECK(list.begin->prev == nullptr);
 		CHECK(list.begin->next == nullptr);
+		CHECK(list.size() == 1);
 
 		list.append(456);
 		CHECK(list.end != list.begin);
@@ -71,6 +85,8 @@ TEST_CASE("[list] - creating doubly-linked list") {
 		CHECK(list.end->value == 456);
 		CHECK(list.end->prev == list.begin);
 		CHECK(list.end->next == nullptr);
+
+		CHECK(list.size() == 2);
 
 	}
 }
