@@ -12,6 +12,8 @@
 class Rational {
 	int numerator;
 	int denominator;
+//private:
+//	static const Rational _one;
 public:
 	Rational(): numerator{0}, denominator{1} {}
 	Rational(int numerator, int denominator): numerator{numerator}, denominator{denominator} {}
@@ -27,14 +29,21 @@ public:
 	}
 
 	static const Rational zero;
+
+	static const Rational one() {
+		static const Rational _one{1,1};
+		return _one;
+	}
 	static int GCD(int a, int b) {
 		// this->zero; //this is unavailable in static methods
 		// Rational::zero; //static fields are available
 		return b ? GCD (b, a % b) : a;
 	}
+
 };
 
 const Rational Rational::zero{0,1};
+//const Rational Rational::_one{1,1};
 
 const Rational zero{0,1};
 
@@ -85,6 +94,10 @@ TEST_CASE("Rational constants") {
 
 	// but they are not stored in each instance - sizeof only includes instance fields
 	CHECK(sizeof(Rational) == 2*sizeof(int));
+
+	CHECK(Rational::one().get_numerator() == 1);
+	CHECK(Rational::one().get_denominator() == 1);
+
 }
 
 TEST_CASE("Static methods") {
