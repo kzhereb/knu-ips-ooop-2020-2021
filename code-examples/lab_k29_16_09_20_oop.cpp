@@ -9,7 +9,6 @@
 #include <stdexcept>
 
 
-
 class Rational {
 	int numerator;
 	int denominator;
@@ -26,7 +25,11 @@ public:
 		}
 		this->denominator = denominator;
 	}
+
+	static const Rational zero;
 };
+
+const Rational Rational::zero{0,1};
 
 const Rational zero{0,1};
 
@@ -67,5 +70,8 @@ TEST_CASE("Rational constants") {
 
 	CHECK(zero.get_numerator() == 0);
 	CHECK(zero.get_denominator() == 1);
+
+	CHECK(Rational::zero.get_numerator() == 0);
+	CHECK(Rational::zero.get_denominator() == 1);
 }
 
