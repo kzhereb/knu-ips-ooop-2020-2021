@@ -15,6 +15,12 @@ struct ListNode {
 	ListNode(int value, ListNode* prev=nullptr, ListNode* next=nullptr): value{value}, prev{prev}, next{next} {}
 };
 
+struct DoublyLinkedList {
+	ListNode* begin;
+	ListNode* end;
+	DoublyLinkedList(): begin{nullptr}, end{nullptr} {}
+};
+
 TEST_CASE("[list] - creating list nodes") {
 	ListNode node{123};
 	CHECK(node.value == 123);
@@ -31,7 +37,12 @@ TEST_CASE("[list] - creating list nodes") {
 	CHECK(node2->prev == &node);
 	CHECK(node2->prev->value == 123);
 	CHECK(node2->next == nullptr);
+}
 
+TEST_CASE("[list] - creating doubly-linked list") {
+	DoublyLinkedList list;
+	CHECK(list.begin == nullptr);
+	CHECK(list.end == nullptr);
 }
 
 
