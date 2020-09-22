@@ -34,6 +34,17 @@ public:
 		static const Rational _one{1,1};
 		return _one;
 	}
+
+	static Rational test_value() {
+		static Rational test_value{1,2};
+		return test_value;
+	}
+
+	static Rational& test_ref() {
+		static Rational test_value{1,2};
+		return test_value;
+	}
+
 	static int GCD(int a, int b) {
 		// this->zero; //this is unavailable in static methods
 		// Rational::zero; //static fields are available
@@ -106,6 +117,23 @@ TEST_CASE("Static methods") {
 	CHECK(Rational::GCD(0, 17) == 17);
 	CHECK(Rational::GCD(17, 0) == 17);
 	CHECK(Rational::GCD(0, 0) == 0);
+}
+
+TEST_CASE("Static inside method") {
+	CHECK(Rational::test_value().get_numerator() == 1);
+	CHECK(Rational::test_value().get_denominator() == 2);
+
+	Rational::test_value().set_denominator(5);
+	CHECK(Rational::test_value().get_numerator() == 1);
+	CHECK(Rational::test_value().get_denominator() == 2); // set_denominator(5) was called for copy
+
+	CHECK(Rational::test_ref().get_numerator() == 1);
+	CHECK(Rational::test_ref().get_denominator() == 2);
+
+	Rational::test_ref().set_denominator(5);
+	CHECK(Rational::test_ref().get_numerator() == 1);
+	CHECK(Rational::test_ref().get_denominator() == 5); // set_denominator(5) was called for the same object
+
 }
 
 class Empty {
