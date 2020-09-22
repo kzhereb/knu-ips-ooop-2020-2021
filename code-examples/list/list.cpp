@@ -10,6 +10,7 @@
 #include <cstddef>
 #include <ostream>
 #include <iostream>
+#include <sstream>
 
 struct ListNode {
 	int value;
@@ -108,7 +109,9 @@ TEST_CASE("[list] - creating doubly-linked list") {
 
 		CHECK(list.size() == 2);
 
-		std::cout<<list<<std::endl;
+		std::stringstream s_out;
+		s_out<<list;
+		CHECK(s_out.str()=="[ 123 456 ]");
 
 	}
 }
