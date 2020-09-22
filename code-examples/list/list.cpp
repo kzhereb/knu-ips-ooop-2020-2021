@@ -27,6 +27,15 @@ struct DoublyLinkedList {
 	std::size_t _size;
 	DoublyLinkedList(): begin{nullptr}, end{nullptr}, _size{0} {}
 
+	~DoublyLinkedList() {
+		ListNode* current = begin;
+		while(current) {
+			ListNode* to_delete = current;
+			current = current->next;
+			delete to_delete;
+		}
+	}
+
 	void append(int value) {
 		ListNode* new_node = new ListNode{value};
 		if (begin == nullptr) {
