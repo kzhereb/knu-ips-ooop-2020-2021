@@ -19,6 +19,17 @@ struct DoublyLinkedList {
 	ListNode* begin;
 	ListNode* end;
 	DoublyLinkedList(): begin{nullptr}, end{nullptr} {}
+
+	void append(int value) {
+		ListNode* new_node = new ListNode{value};
+		if (begin == nullptr) {
+			begin = end = new_node;
+		} else {
+			new_node->prev = end;
+			end->next = new_node;
+			end = new_node;
+		}
+	}
 };
 
 TEST_CASE("[list] - creating list nodes") {
@@ -43,6 +54,25 @@ TEST_CASE("[list] - creating doubly-linked list") {
 	DoublyLinkedList list;
 	CHECK(list.begin == nullptr);
 	CHECK(list.end == nullptr);
+
+	SUBCASE("append element") {
+		list.append(123);
+		CHECK(list.end == list.begin);
+		CHECK(list.begin->value == 123);
+		CHECK(list.begin->prev == nullptr);
+		CHECK(list.begin->next == nullptr);
+
+		list.append(456);
+		CHECK(list.end != list.begin);
+		CHECK(list.begin->value == 123);
+		CHECK(list.begin->prev == nullptr);
+		CHECK(list.begin->next == list.end);
+
+		CHECK(list.end->value == 456);
+		CHECK(list.end->prev == list.begin);
+		CHECK(list.end->next == nullptr);
+
+	}
 }
 
 
