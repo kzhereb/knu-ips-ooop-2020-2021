@@ -109,9 +109,12 @@ TEST_CASE("[list] - creating doubly-linked list") {
 
 		CHECK(list.size() == 2);
 
-		std::stringstream s_out;
-		s_out<<list;
-		CHECK(s_out.str()=="[ 123 456 ]");
+		{
+			std::stringstream s_out;
+			s_out<<list;
+			CHECK(s_out.str()=="[ 123 456 ]");
+		} // to keep s_out in local scope
+
 
 	}
 }
