@@ -137,6 +137,8 @@ TEST_CASE("[list] - creating doubly-linked list") {
 			CHECK(std::string(ex.what()) == "index=2 larger than list size=2");
 		}
 
+		CHECK_THROWS_WITH_AS(list[2],"index=2 larger than list size=2",std::out_of_range);
+
 
 
 	}
