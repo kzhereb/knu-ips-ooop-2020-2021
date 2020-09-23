@@ -36,6 +36,11 @@ struct ListNode {
 	ListNode(int value, ListNode* prev=nullptr, ListNode* next=nullptr): value{value}, prev{prev}, next{next} {}
 };
 
+
+namespace test_doubly_linked_list {
+	void test_create_append_clear();
+}
+
 /**
  * \brief Doubly linked list
  *
@@ -43,10 +48,13 @@ struct ListNode {
  * See [Doubly Linked List](https://en.wikipedia.org/wiki/Doubly_linked_list "Wikipedia article on Doubly Linked List")
  */
 
-struct DoublyLinkedList {
+class DoublyLinkedList {
+private:
 	ListNode* begin;
 	ListNode* end;
 	std::size_t _size;
+public:
+
 	DoublyLinkedList(): begin{nullptr}, end{nullptr}, _size{0} {}
 
 	~DoublyLinkedList() {
@@ -119,19 +127,23 @@ struct DoublyLinkedList {
 		}
 		return result;
 	}
+
+	friend std::ostream& operator<<(std::ostream& out, const DoublyLinkedList& list) {
+		ListNode* current = list.begin;
+		out<<"[ ";
+		while(current) {
+			out << current->value << " ";
+			current = current->next;
+		}
+		out<<"]";
+		return out;
+	}
+
+	friend void test_doubly_linked_list::test_create_append_clear();
 };
 
 
-std::ostream& operator<<(std::ostream& out, const DoublyLinkedList& list) {
-	ListNode* current = list.begin;
-	out<<"[ ";
-	while(current) {
-		out << current->value << " ";
-		current = current->next;
-	}
-	out<<"]";
-	return out;
-}
+
 
 TEST_CASE("[list] - creating list nodes") {
 	ListNode node{123};
@@ -153,58 +165,65 @@ TEST_CASE("[list] - creating list nodes") {
 	delete node2;
 }
 
-TEST_CASE("[list] - creating doubly-linked list") {
-	DoublyLinkedList list;
-	CHECK(list.begin == nullptr);
-	CHECK(list.end == nullptr);
-	CHECK(list.size() == 0);
 
-	SUBCASE("append element") {
-		list.append(123);
-		CHECK(list.end == list.begin);
-		CHECK(list.begin->value == 123);
-		CHECK(list.begin->prev == nullptr);
-		CHECK(list.begin->next == nullptr);
-		CHECK(list.size() == 1);
+namespace test_doubly_linked_list {
+	void test_create_append_clear() {
+		DoublyLinkedList list;
+			CHECK(list.begin == nullptr);
+			CHECK(list.end == nullptr);
+			CHECK(list.size() == 0);
 
-		list.append(456);
-		CHECK(list.end != list.begin);
-		CHECK(list.begin->value == 123);
-		CHECK(list.begin->prev == nullptr);
-		CHECK(list.begin->next == list.end);
+			SUBCASE("append element") {
+				list.append(123);
+				CHECK(list.end == list.begin);
+				CHECK(list.begin->value == 123);
+				CHECK(list.begin->prev == nullptr);
+				CHECK(list.begin->next == nullptr);
+				CHECK(list.size() == 1);
 
-		CHECK(list.end->value == 456);
-		CHECK(list.end->prev == list.begin);
-		CHECK(list.end->next == nullptr);
+				list.append(456);
+				CHECK(list.end != list.begin);
+				CHECK(list.begin->value == 123);
+				CHECK(list.begin->prev == nullptr);
+				CHECK(list.begin->next == list.end);
 
-		CHECK(list.size() == 2);
+				CHECK(list.end->value == 456);
+				CHECK(list.end->prev == list.begin);
+				CHECK(list.end->next == nullptr);
 
-		{
-			std::stringstream s_out;
-			s_out<<list;
-			CHECK(s_out.str()=="[ 123 456 ]");
-		} // to keep s_out in local scope
+				CHECK(list.size() == 2);
 
-		CHECK(list[0]==123);
-		CHECK(list[1]==456);
-		try {
-			int result = list[2];
-			CHECK(result); // not called
-		} catch(const std::out_of_range& ex) {
-			CHECK(std::string(ex.what()) == "index=2 larger than list size=2");
-		}
+				{
+					std::stringstream s_out;
+					s_out<<list;
+					CHECK(s_out.str()=="[ 123 456 ]");
+				} // to keep s_out in local scope
 
-		CHECK_THROWS_WITH_AS(list[2],"index=2 larger than list size=2",std::out_of_range);
+				CHECK(list[0]==123);
+				CHECK(list[1]==456);
+				try {
+					int result = list[2];
+					CHECK(result); // not called
+				} catch(const std::out_of_range& ex) {
+					CHECK(std::string(ex.what()) == "index=2 larger than list size=2");
+				}
 
-		SUBCASE("clear list") {
-			list.clear();
-			CHECK(list.size()==0);
-			list.append(789);
-			CHECK(list.size()==1);
-			CHECK(list[0]==789);
-		}
+				CHECK_THROWS_WITH_AS(list[2],"index=2 larger than list size=2",std::out_of_range);
 
+				SUBCASE("clear list") {
+					list.clear();
+					CHECK(list.size()==0);
+					list.append(789);
+					CHECK(list.size()==1);
+					CHECK(list[0]==789);
+				}
+
+			}
 	}
+}
+
+TEST_CASE("[list] - creating doubly-linked list") {
+	test_doubly_linked_list::test_create_append_clear();
 }
 
 
