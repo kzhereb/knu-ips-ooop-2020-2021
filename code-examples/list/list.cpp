@@ -13,13 +13,35 @@
 #include <sstream>
 #include <stdexcept>
 
-struct ListNode {
-	int value;
-	ListNode* prev;
-	ListNode* next;
+/**
+ * \brief A single node in doubly linked list
+ *
+ * A single node holding a value and pointers to the next and previous nodes.
+ * Pointers can be empty (for first and last nodes).
+ * \see DoublyLinkedList
+ */
 
+struct ListNode {
+	int value;			/**< Value stored in this node */
+	ListNode* prev;		/**< Pointer to the previous node in the list, can be empty (nullptr) for the first node */
+	ListNode* next;		/**< Pointer to the next node in the list, can be empty (nullptr) for the last node */
+
+	/**
+	 * \brief ListNode constructor
+	 *
+	 * Value must be specified, previous and next pointers are optional.
+	 * Can specify only previous without next (useful for append)
+	 * \callergraph
+	 */
 	ListNode(int value, ListNode* prev=nullptr, ListNode* next=nullptr): value{value}, prev{prev}, next{next} {}
 };
+
+/**
+ * \brief Doubly linked list
+ *
+ * Stores a sequence of values using nodes (ListNode objects) for each value linked with next and previous pointers,
+ * See [Doubly Linked List](https://en.wikipedia.org/wiki/Doubly_linked_list "Wikipedia article on Doubly Linked List")
+ */
 
 struct DoublyLinkedList {
 	ListNode* begin;
@@ -31,6 +53,15 @@ struct DoublyLinkedList {
 		this->clear();
 	}
 
+	/**
+	 * \brief Append value to the end of this list
+	 *
+	 * Creates a new node containing this value, inserts it at the end of list.
+	 *
+	 * \param value a value to be appended
+	 * \post List size is increased by 1
+	 * \callgraph
+	 */
 	void append(int value) {
 		ListNode* new_node = new ListNode{value};
 		if (begin == nullptr) {
@@ -54,6 +85,14 @@ struct DoublyLinkedList {
 		_size = 0;
 	}
 
+	/**
+	 * \brief Access items by index
+	 *
+	 * Complexity is O(n)
+	 * \param index zero-based index of item to get
+	 * \throw std::out_of_range if index is too large (greater or equals to list size)
+	 * \return value of item
+	 */
 	int operator[](std::size_t index) {
 		ListNode* current = begin;
 		std::size_t cur_index = 0;
