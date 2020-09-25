@@ -71,7 +71,7 @@ public:
 	 * \callgraph
 	 */
 	void append(T value) {
-		ListNode<T>* new_node = new ListNode<T>{value};
+		auto new_node = new ListNode<T>{value};
 		if (begin == nullptr) {
 			begin = end = new_node;
 		} else {
@@ -129,7 +129,7 @@ public:
 	}
 
 	friend std::ostream& operator<<(std::ostream& out, const DoublyLinkedList<T>& list) {
-		ListNode<T>* current = list.begin;
+		ListNode<T>* current = list.begin; //can also use auto current; or auto* current;
 		out<<"[ ";
 		while(current) {
 			out << current->value << " ";
