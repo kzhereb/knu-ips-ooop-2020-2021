@@ -20,11 +20,11 @@
  * Pointers can be empty (for first and last nodes).
  * \see DoublyLinkedList
  */
-
+template<typename T>
 struct ListNode {
-	int value;			/**< Value stored in this node */
-	ListNode* prev;		/**< Pointer to the previous node in the list, can be empty (nullptr) for the first node */
-	ListNode* next;		/**< Pointer to the next node in the list, can be empty (nullptr) for the last node */
+	T value;			/**< Value stored in this node */
+	ListNode<T>* prev;		/**< Pointer to the previous node in the list, can be empty (nullptr) for the first node */
+	ListNode<T>* next;		/**< Pointer to the next node in the list, can be empty (nullptr) for the last node */
 
 	/**
 	 * \brief ListNode constructor
@@ -33,7 +33,7 @@ struct ListNode {
 	 * Can specify only previous without next (useful for append)
 	 * \callergraph
 	 */
-	ListNode(int value, ListNode* prev=nullptr, ListNode* next=nullptr): value{value}, prev{prev}, next{next} {}
+	ListNode(T value, ListNode<T>* prev=nullptr, ListNode<T>* next=nullptr): value{value}, prev{prev}, next{next} {}
 };
 
 
@@ -47,11 +47,11 @@ namespace test_doubly_linked_list {
  * Stores a sequence of values using nodes (ListNode objects) for each value linked with next and previous pointers,
  * See [Doubly Linked List](https://en.wikipedia.org/wiki/Doubly_linked_list "Wikipedia article on Doubly Linked List")
  */
-
+template<typename T>
 class DoublyLinkedList {
 private:
-	ListNode* begin;
-	ListNode* end;
+	ListNode<T>* begin;
+	ListNode<T>* end;
 	std::size_t _size;
 public:
 
@@ -70,8 +70,8 @@ public:
 	 * \post List size is increased by 1
 	 * \callgraph
 	 */
-	void append(int value) {
-		ListNode* new_node = new ListNode{value};
+	void append(T value) {
+		ListNode<T>* new_node = new ListNode<T>{value};
 		if (begin == nullptr) {
 			begin = end = new_node;
 		} else {
@@ -83,9 +83,9 @@ public:
 	}
 
 	void clear() {
-		ListNode* current = begin;
+		ListNode<T>* current = begin;
 		while(current) {
-			ListNode* to_delete = current;
+			ListNode<T>* to_delete = current;
 			current = current->next;
 			delete to_delete;
 		}
@@ -102,7 +102,7 @@ public:
 	 * \return value of item
 	 */
 	int operator[](std::size_t index) {
-		ListNode* current = begin;
+		ListNode<T>* current = begin;
 		std::size_t cur_index = 0;
 		while(current) {
 			if (cur_index == index) {
@@ -120,7 +120,7 @@ public:
 
 	std::size_t size_naive() {
 		std::size_t result = 0;
-		ListNode* current = begin;
+		ListNode<T>* current = begin;
 		while(current) {
 			result++;
 			current = current->next;
@@ -128,8 +128,8 @@ public:
 		return result;
 	}
 
-	friend std::ostream& operator<<(std::ostream& out, const DoublyLinkedList& list) {
-		ListNode* current = list.begin;
+	friend std::ostream& operator<<(std::ostream& out, const DoublyLinkedList<T>& list) {
+		ListNode<T>* current = list.begin;
 		out<<"[ ";
 		while(current) {
 			out << current->value << " ";
@@ -146,15 +146,15 @@ public:
 
 
 TEST_CASE("[list] - creating list nodes") {
-	ListNode node{123};
+	ListNode<int> node{123};
 	CHECK(node.value == 123);
 
-	ListNode* node2;
+	ListNode<int>* node2;
 	SUBCASE("constructor with 3 arguments") {
-		node2 = new ListNode{456, &node, nullptr};
+		node2 = new ListNode<int>{456, &node, nullptr};
 	}
 	SUBCASE("constructor with 2 arguments") {
-		node2 = new ListNode{456, &node};
+		node2 = new ListNode<int>{456, &node};
 	}
 
 	CHECK(node2->value == 456);
@@ -168,7 +168,7 @@ TEST_CASE("[list] - creating list nodes") {
 
 namespace test_doubly_linked_list {
 	void test_create_append_clear() {
-		DoublyLinkedList list;
+		DoublyLinkedList<int> list;
 			CHECK(list.begin == nullptr);
 			CHECK(list.end == nullptr);
 			CHECK(list.size() == 0);
