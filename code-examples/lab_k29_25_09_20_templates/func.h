@@ -12,6 +12,6 @@ template<typename T>
 T square(T value);
 
 //Approach 2: include implementation header in declaration header
-#include "func.hxx"
+//#include "func.hxx"
 
 #endif /* CODE_EXAMPLES_LAB_K29_25_09_20_TEMPLATES_FUNC_H_ */
