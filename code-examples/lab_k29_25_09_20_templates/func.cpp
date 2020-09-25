@@ -5,6 +5,8 @@
  *      Author: KZ
  */
 
+#include "func.h"
+
 #include "../doctest.h"
 
 template<typename T>
