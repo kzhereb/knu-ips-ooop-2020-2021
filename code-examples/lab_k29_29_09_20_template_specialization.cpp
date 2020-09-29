@@ -10,8 +10,9 @@
 #include <vector>
 #include <ostream>
 #include <sstream>
+#include <type_traits>
 
-template<typename T>
+template<typename T, typename std::enable_if<!std::is_arithmetic<T>::value>::type* = nullptr>
 void print_sum(std::ostream& out, const std::vector<T>& items) {
 	out<<"[ ";
 	for (const auto& item:items) {
@@ -20,8 +21,8 @@ void print_sum(std::ostream& out, const std::vector<T>& items) {
 	out<<"]";
 }
 
-template<>
-void print_sum(std::ostream& out, const std::vector<int>& items) {
+template<typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
+void print_sum(std::ostream& out, const std::vector<T>& items) {
 	int result = 0;
 	for (auto item:items) {
 		result += item;
@@ -38,6 +39,12 @@ TEST_CASE("template specializations") {
 	}
 	SUBCASE("int") {
 		std::vector<int> items{1, 3, 5};
+		std::stringstream s_out;
+		print_sum(s_out, items);
+		CHECK(s_out.str() == "9");
+	}
+	SUBCASE("unsigned") {
+		std::vector<unsigned> items{1, 3, 5};
 		std::stringstream s_out;
 		print_sum(s_out, items);
 		CHECK(s_out.str() == "9");
