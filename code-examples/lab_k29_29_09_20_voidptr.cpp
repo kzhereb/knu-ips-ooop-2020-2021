@@ -10,6 +10,7 @@
 #include <string>
 #include <ostream>
 #include <sstream>
+#include <iostream>
 
 struct Anything {
 	void* data;
@@ -56,6 +57,38 @@ TEST_CASE("working with void*") {
 		CHECK(s_out.str() == "unsupported type: ???");
 
 	}
+
+}
+
+TEST_CASE("getting addresses") {
+
+	SUBCASE("int") {
+		int value = 123;
+		int* ptr = &value;
+		//std::cout<< "value = "<<value<<", address = "<<ptr<<std::endl;
+		SUBCASE("value") {
+			std::stringstream s_out;
+			s_out<<value;
+			CHECK(s_out.str() == "123");
+		}
+		SUBCASE("ptr") {
+			std::stringstream s_out;
+			s_out<<ptr;
+			CHECK(s_out.str().substr(0,2) == "0x");
+		}
+
+		SUBCASE("value as ptr") {
+			std::stringstream s_out;
+			s_out<<(void*)value;
+			CHECK(s_out.str() == "0x7b");
+		}
+
+	}
+
+	char cvalue = 'a';
+	char* cptr = &cvalue;
+	//std::cout<< "value = "<<cvalue<<", address = "<<cptr<<std::endl; //error - tries to treat char* as 0-terminated string
+	//std::cout<< "value = "<<cvalue<<", address = "<<(void*)cptr<<std::endl;
 
 
 }
