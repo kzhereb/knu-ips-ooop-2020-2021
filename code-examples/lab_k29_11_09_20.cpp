@@ -1,6 +1,11 @@
+
+#include "doctest.h"
+
 #include <cstring>
 #include <algorithm>
 #include <iostream>
+
+
 
 namespace lab_k29_11_09_20 {
 
@@ -67,7 +72,11 @@ public:
     }
 
     void print() {
-    	std::cout<<data<<std::endl;
+    	if (data) {
+    		std::cout<<data<<std::endl;
+    	} else {
+    		std::cout<<"print() called for empty data"<<std::endl;
+    	}
     }
 
     friend string twice( string& value);
@@ -78,7 +87,7 @@ string helloworld() {
 	return "hello world";
 }
 
-// string twice(string& value)  // works, but requires copy constructor in some cases
+// string twice(string value)  // works, but requires copy constructor in some cases
 
 string twice(string& value) {
 	std::cout<<"twice& "<<value.data<<std::endl;
@@ -92,6 +101,8 @@ string twice(string&& value) {
 
 
 
+
+//TEST_CASE("r-value references and move semantics") {
 int main(int argc, char** argv) {
 	std::cout<<"constructing and copying"<<std::endl;
 	string my_string {"hello world"};
@@ -127,6 +138,16 @@ int main(int argc, char** argv) {
 	string nonempty2{std::move(empty2)};
 	nonempty2.print();
 	// empty2.print(); // runtime error
+
+	std::cout<<"calling move constructor"<<std::endl;
+	string copy1 {hello}; // calls copy constructor
+	string copy2 {hello + "world"}; // rvo - no copy constructor needed
+
+	std::move(hello);
+	hello.print(); // std::move just converts to rvalue reference, it doesn't move
+
+	string copy3 {std::move(hello)}; //calls move constructor
+	hello.print(); // should be empty (moved-from)
 
 	return 0;
 }
