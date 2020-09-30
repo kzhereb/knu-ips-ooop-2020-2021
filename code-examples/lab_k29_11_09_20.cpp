@@ -99,11 +99,21 @@ string twice(string&& value) {
 	return value + value;
 }
 
+string decide(int value) {
+	std::cout<<"decide "<<value<<std::endl;
+	string hello{"hello"};
+	string hi{"hi"};
+
+	//return value<10?hello:hi; //requires copy constructor, RVO can't be applied because different objects can be returned
+	//return std::move(value<10?hello:hi) //error, objects are freed, returns dangling reference
+
+	string result = std::move(value<10?hello:hi); //move, no copy
+	return result;
+}
 
 
-
-//TEST_CASE("r-value references and move semantics") {
-int main(int argc, char** argv) {
+TEST_CASE("r-value references and move semantics") {
+//int main(int argc, char** argv) {
 	std::cout<<"constructing and copying"<<std::endl;
 	string my_string {"hello world"};
 	string copy = my_string;
@@ -149,7 +159,11 @@ int main(int argc, char** argv) {
 	string copy3 {std::move(hello)}; //calls move constructor
 	hello.print(); // should be empty (moved-from)
 
-	return 0;
+	std::cout<<"decide"<<std::endl;
+	string greet = decide(5);
+	greet.print();
+
+	//return 0;
 }
 
 }
