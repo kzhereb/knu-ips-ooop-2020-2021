@@ -111,9 +111,13 @@ string decide(int value) {
 	return result;
 }
 
+//#define USE_TESTS
 
+#ifdef USE_TESTS
 TEST_CASE("r-value references and move semantics") {
-//int main(int argc, char** argv) {
+#else
+int main(int argc, char** argv) {
+#endif
 	std::cout<<"constructing and copying"<<std::endl;
 	string my_string {"hello world"};
 	string copy = my_string;
@@ -163,7 +167,9 @@ TEST_CASE("r-value references and move semantics") {
 	string greet = decide(5);
 	greet.print();
 
-	//return 0;
+#ifndef USE_TESTS
+	return 0;
+#endif
 }
 
 }
