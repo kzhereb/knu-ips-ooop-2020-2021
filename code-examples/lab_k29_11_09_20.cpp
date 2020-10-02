@@ -105,8 +105,9 @@ string decide(int value) {
 	string hi{"hi"};
 
 	//return value<10?hello:hi; //requires copy constructor, RVO can't be applied because different objects can be returned
-	//return std::move(value<10?hello:hi) //error, objects are freed, returns dangling reference
+	//return std::move(value<10?hello:hi); //error, objects are freed, returns dangling reference
 
+	//string result = value<10?hello:hi; // copy constructor called here
 	string result = std::move(value<10?hello:hi); //move, no copy
 	return result;
 }
