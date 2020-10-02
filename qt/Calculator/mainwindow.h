@@ -36,9 +36,18 @@ private slots:
 
     void on_btn_Num0_clicked();
 
+    void on_btnPlus_clicked();
+
+    void on_btnEquals_clicked();
+
 private:
     Ui::MainWindow *ui;
+    int operand1;
+    QString operation="";
+
     void number_clicked(int number);
+    void operation_clicked(QString operation);
+    int calculate(QString const& operation, int operand1, int operand2);
 };
 
 #endif // MAINWINDOW_H

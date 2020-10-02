@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -21,6 +22,26 @@ void MainWindow::number_clicked(int number)
     }
     current_text += QString::number(number);
     ui->lbl_Result->setText(current_text);
+}
+
+void MainWindow::operation_clicked(QString operation)
+{
+    if (this->operation!="") {
+        qDebug()<<"multiple operations not supported";
+        return;
+    }
+    QString current_text = ui->lbl_Result->text();
+    this->operand1 = current_text.toInt();
+    this->operation = operation;
+    current_text += operation;
+    ui->lbl_Result->setText(current_text);
+}
+
+int MainWindow::calculate(const QString &operation, int operand1, int operand2)
+{
+    if (operation == "+") {
+        return operand1+operand2;
+    }
 }
 
 void MainWindow::on_btn_Num1_clicked()
@@ -71,4 +92,21 @@ void MainWindow::on_btn_Num9_clicked()
 void MainWindow::on_btn_Num0_clicked()
 {
     number_clicked(0);
+}
+
+void MainWindow::on_btnPlus_clicked()
+{
+    operation_clicked("+");
+}
+
+void MainWindow::on_btnEquals_clicked()
+{
+    QString current_text = ui->lbl_Result->text();
+    QStringList parts = current_text.split(this->operation);
+    int operand2 = parts[1].toInt();
+    int result = calculate(operation, operand1, operand2);
+    current_text = QString::number(result);
+    ui->lbl_Result->setText(current_text);
+    this->operation = "";
+
 }
