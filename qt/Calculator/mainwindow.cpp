@@ -112,7 +112,10 @@ void MainWindow::on_btnPlus_clicked()
 
 void MainWindow::on_btnEquals_clicked()
 {
+    if (this->operation == "") {return;}
     QString current_text = ui->lbl_Result->text();
+    if (current_text.endsWith(this->operation)) {return;} //no second operand
+
     QStringList parts = current_text.split(this->operation);
     int operand2 = parts[1].toInt();
 
