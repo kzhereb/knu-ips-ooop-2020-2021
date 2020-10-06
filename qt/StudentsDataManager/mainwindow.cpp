@@ -66,4 +66,45 @@ void MainWindow::add_student_to_table(const Student &student)
 
     item = new QTableWidgetItem(QString::number(student.avgGrade()));
     ui->tbwStudents->setItem(rows, 3, item);
+
+    //load_from_file(); //can't call in constructor
+}
+
+void MainWindow::load_from_file()
+{
+    QFile file{"data.txt"};
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            return;
+    QTextStream in(&file);
+    int current_field = 0;
+    Student current_student;
+    while (!in.atEnd())
+    {
+       QString line = in.readLine();
+       switch (current_field) {
+       case 0:
+           current_student.setSurname(line);
+           break;
+       case 1:
+           current_student.setName(line);
+           break;
+       case 2:
+           current_student.setGroup(line);
+           break;
+       case 3:
+           current_student.setAvgGrade(line.toDouble());
+           break;
+       case 4:
+           current_field = -1;
+           add_student_to_table(current_student);
+           break;
+       }
+       current_field++;
+    }
+    file.close();
+}
+
+void MainWindow::on_btnLoad_clicked()
+{
+    load_from_file();
 }
