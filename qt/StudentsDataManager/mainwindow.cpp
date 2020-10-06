@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
                                                "Name",
                                                "Group",
                                                "Avg. Grade"});
+    load_from_file();
 }
 
 MainWindow::~MainWindow()
@@ -67,7 +68,7 @@ void MainWindow::add_student_to_table(const Student &student)
     item = new QTableWidgetItem(QString::number(student.avgGrade()));
     ui->tbwStudents->setItem(rows, 3, item);
 
-    //load_from_file(); //can't call in constructor
+
 }
 
 void MainWindow::load_from_file()
