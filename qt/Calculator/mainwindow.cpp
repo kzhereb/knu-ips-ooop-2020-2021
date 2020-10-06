@@ -128,5 +128,11 @@ void MainWindow::on_lswHistory_itemDoubleClicked(QListWidgetItem *item)
 {
     QString history_item = item->text();
     QStringList parts = history_item.split(" = ");
-    ui->lbl_Result->setText(parts[1]);
+    if (this->operation == "") {
+        ui->lbl_Result->setText(parts[1]);
+    } else {
+        QString current_text = ui->lbl_Result->text();
+        current_text += parts[1];
+        ui->lbl_Result->setText(current_text);
+    }
 }
