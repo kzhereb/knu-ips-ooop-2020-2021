@@ -44,6 +44,16 @@ int MainWindow::calculate(const QString &operation, int operand1, int operand2)
     }
 }
 
+void MainWindow::add_history(const QString &operation, int operand1, int operand2, int result)
+{
+    QString history = QString("%1 %2 %3 = %4").arg(
+                QString::number(operand1),
+                operation,
+                QString::number(operand2),
+                QString::number(result));
+    ui->lswHistory->addItem(history);
+}
+
 void MainWindow::on_btn_Num1_clicked()
 {
     number_clicked(1);
@@ -104,7 +114,10 @@ void MainWindow::on_btnEquals_clicked()
     QString current_text = ui->lbl_Result->text();
     QStringList parts = current_text.split(this->operation);
     int operand2 = parts[1].toInt();
+
     int result = calculate(operation, operand1, operand2);
+    add_history(operation, operand1, operand2, result);
+
     current_text = QString::number(result);
     ui->lbl_Result->setText(current_text);
     this->operation = "";

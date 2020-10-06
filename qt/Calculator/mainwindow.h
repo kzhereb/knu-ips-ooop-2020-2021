@@ -48,6 +48,7 @@ private:
     void number_clicked(int number);
     void operation_clicked(QString operation);
     int calculate(QString const& operation, int operand1, int operand2);
+    void add_history(QString const& operation, int operand1, int operand2, int result);
 };
 
 #endif // MAINWINDOW_H
