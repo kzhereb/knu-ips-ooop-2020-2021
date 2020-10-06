@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QListWidgetItem>
 
 namespace Ui {
 class MainWindow;
@@ -39,6 +40,8 @@ private slots:
     void on_btnPlus_clicked();
 
     void on_btnEquals_clicked();
+
+    void on_lswHistory_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;

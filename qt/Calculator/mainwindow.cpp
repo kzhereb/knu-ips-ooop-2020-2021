@@ -123,3 +123,10 @@ void MainWindow::on_btnEquals_clicked()
     this->operation = "";
 
 }
+
+void MainWindow::on_lswHistory_itemDoubleClicked(QListWidgetItem *item)
+{
+    QString history_item = item->text();
+    QStringList parts = history_item.split(" = ");
+    ui->lbl_Result->setText(parts[1]);
+}
