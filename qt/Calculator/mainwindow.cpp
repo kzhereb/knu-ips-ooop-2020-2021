@@ -164,3 +164,13 @@ void MainWindow::on_lswHistory_itemDoubleClicked(QListWidgetItem *item)
 
     }
 }
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    QString key = event->text();
+    bool is_number;
+    int result = key.toInt(&is_number);
+    if (is_number) {
+        number_clicked(result);
+    }
+}

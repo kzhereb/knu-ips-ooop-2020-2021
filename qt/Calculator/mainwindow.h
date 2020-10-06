@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QListWidgetItem>
+#include <QKeyEvent>
 
 namespace Ui {
 class MainWindow;
@@ -42,6 +43,9 @@ private slots:
     void on_btnEquals_clicked();
 
     void on_lswHistory_itemDoubleClicked(QListWidgetItem *item);
+
+protected:
+    void keyPressEvent(QKeyEvent* event) override;
 
 private:
     Ui::MainWindow *ui;
