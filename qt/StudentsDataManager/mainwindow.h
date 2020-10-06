@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "student.h"
+
 #include <QMainWindow>
 
 namespace Ui {
@@ -22,6 +24,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    void add_student_to_table(const Student& student);
 };
 
 #endif // MAINWINDOW_H
