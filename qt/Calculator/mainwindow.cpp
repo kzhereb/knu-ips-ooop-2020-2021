@@ -140,8 +140,8 @@ void MainWindow::on_lswHistory_itemDoubleClicked(QListWidgetItem *item)
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this,
                                           "Choose action",
-                                          "Press Yes to replace entire expression, No to replace second operand",
-                                           QMessageBox::Yes|QMessageBox::No);
+                                          "Press Yes to replace entire expression, No to replace second operand, Cancel to keep current expression",
+                                           QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
             if (reply == QMessageBox::Yes) {
                ui->lbl_Result->setText(parts[1]);
                this->operation = "";
@@ -149,6 +149,8 @@ void MainWindow::on_lswHistory_itemDoubleClicked(QListWidgetItem *item)
                 QStringList expression_parts = current_text.split(this->operation);
                 current_text = expression_parts[0] + this->operation + parts[1];
                 ui->lbl_Result->setText(current_text);
+            } else if (reply == QMessageBox::Cancel) {
+                // do nothing - user asked us to keep previous expression
             }
         }
 
