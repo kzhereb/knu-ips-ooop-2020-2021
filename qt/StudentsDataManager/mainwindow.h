@@ -18,6 +18,8 @@ public:
 private slots:
     void on_btnSave_clicked();
 
+    void on_btnClear_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

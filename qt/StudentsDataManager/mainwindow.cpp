@@ -34,3 +34,11 @@ void MainWindow::on_btnSave_clicked()
           << student.avgGrade()<<"\n\n";
     file.close();
 }
+
+void MainWindow::on_btnClear_clicked()
+{
+    ui->inpSurname->clear();
+    ui->inpName->clear();
+    ui->inpGroup->setCurrentIndex(0);
+    ui->inpAvgGrade->setValue(75);
+}
