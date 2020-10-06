@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -132,7 +133,24 @@ void MainWindow::on_lswHistory_itemDoubleClicked(QListWidgetItem *item)
         ui->lbl_Result->setText(parts[1]);
     } else {
         QString current_text = ui->lbl_Result->text();
-        current_text += parts[1];
-        ui->lbl_Result->setText(current_text);
+        if (current_text.endsWith(this->operation)) { // no second operand
+            current_text += parts[1];
+            ui->lbl_Result->setText(current_text);
+        } else {
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this,
+                                          "Choose action",
+                                          "Press Yes to replace entire expression, No to replace second operand",
+                                           QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::Yes) {
+               ui->lbl_Result->setText(parts[1]);
+               this->operation = "";
+            } else if (reply == QMessageBox::No) {
+                QStringList expression_parts = current_text.split(this->operation);
+                current_text = expression_parts[0] + this->operation + parts[1];
+                ui->lbl_Result->setText(current_text);
+            }
+        }
+
     }
 }
