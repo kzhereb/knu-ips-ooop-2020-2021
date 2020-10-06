@@ -52,6 +52,11 @@ void MainWindow::add_history(const QString &operation, int operand1, int operand
                 operation,
                 QString::number(operand2),
                 QString::number(result));
+    int history_size = ui->lswHistory->count();
+    if (history_size >= MAX_HISTORY_SIZE) {
+        QListWidgetItem* to_remove = ui->lswHistory->takeItem(0);
+        delete to_remove;
+    }
     ui->lswHistory->addItem(history);
 }
 

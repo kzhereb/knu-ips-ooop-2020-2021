@@ -48,6 +48,8 @@ private:
     int operand1;
     QString operation="";
 
+    const int MAX_HISTORY_SIZE = 9;
+
     void number_clicked(int number);
     void operation_clicked(QString operation);
     int calculate(QString const& operation, int operand1, int operand2);
