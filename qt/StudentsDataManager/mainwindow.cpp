@@ -76,6 +76,8 @@ void MainWindow::load_from_file()
     QFile file{"data.txt"};
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
             return;
+    ui->tbwStudents->clearContents();
+    ui->tbwStudents->setRowCount(0);
     QTextStream in(&file);
     int current_field = 0;
     Student current_student;
