@@ -56,10 +56,10 @@ void MainWindow::add_history(const QString &operation, int operand1, int operand
                 QString::number(operand2),
                 QString::number(result));
     int history_size = model->rowCount();
-//    if (history_size >= MAX_HISTORY_SIZE) {
-//        QListWidgetItem* to_remove = ui->lswHistory->takeItem(0);
-//        delete to_remove;
-//    }
+    if (history_size >= MAX_HISTORY_SIZE) {
+        model->removeRow(0);
+        history_size--;
+    }
     model->insertRow(history_size);
     QModelIndex index = model->index(history_size);
     model->setData(index,history);
