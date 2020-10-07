@@ -139,9 +139,21 @@ void MainWindow::on_btnEquals_clicked()
 
 }
 
-void MainWindow::on_lswHistory_itemDoubleClicked(QListWidgetItem *item)
+void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    QString history_item = item->text();
+    QString key = event->text();
+    bool is_number;
+    int result = key.toInt(&is_number);
+    if (is_number) {
+        number_clicked(result);
+    }
+}
+
+
+
+void MainWindow::on_lsvHistory_doubleClicked(const QModelIndex &index)
+{
+    QString history_item = model->data(index).toString();
     QStringList parts = history_item.split(" = ");
     if (this->operation == "") {
         ui->lbl_Result->setText(parts[1]);
@@ -169,19 +181,4 @@ void MainWindow::on_lswHistory_itemDoubleClicked(QListWidgetItem *item)
         }
 
     }
-}
-
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-    QString key = event->text();
-    bool is_number;
-    int result = key.toInt(&is_number);
-    if (is_number) {
-        number_clicked(result);
-    }
-}
-
-void MainWindow::on_lswHistory_doubleClicked(const QModelIndex &index)
-{
-
 }

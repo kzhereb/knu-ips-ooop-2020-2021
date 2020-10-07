@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QListWidgetItem>
 #include <QKeyEvent>
 #include <QStringListModel>
 
@@ -43,9 +42,10 @@ private slots:
 
     void on_btnEquals_clicked();
 
-    void on_lswHistory_itemDoubleClicked(QListWidgetItem *item);
 
-    void on_lswHistory_doubleClicked(const QModelIndex &index);
+
+
+    void on_lsvHistory_doubleClicked(const QModelIndex &index);
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
