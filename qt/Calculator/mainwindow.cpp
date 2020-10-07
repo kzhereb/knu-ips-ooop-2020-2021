@@ -5,9 +5,12 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    model(new QStringListModel)
 {
     ui->setupUi(this);
+
+    ui->lsvHistory->setModel(model);
 }
 
 MainWindow::~MainWindow()
@@ -52,12 +55,15 @@ void MainWindow::add_history(const QString &operation, int operand1, int operand
                 operation,
                 QString::number(operand2),
                 QString::number(result));
-    int history_size = ui->lswHistory->count();
-    if (history_size >= MAX_HISTORY_SIZE) {
-        QListWidgetItem* to_remove = ui->lswHistory->takeItem(0);
-        delete to_remove;
-    }
-    ui->lswHistory->addItem(history);
+    int history_size = model->rowCount();
+//    if (history_size >= MAX_HISTORY_SIZE) {
+//        QListWidgetItem* to_remove = ui->lswHistory->takeItem(0);
+//        delete to_remove;
+//    }
+    model->insertRow(history_size);
+    QModelIndex index = model->index(history_size);
+    model->setData(index,history);
+
 }
 
 void MainWindow::on_btn_Num1_clicked()
@@ -173,4 +179,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if (is_number) {
         number_clicked(result);
     }
+}
+
+void MainWindow::on_lswHistory_doubleClicked(const QModelIndex &index)
+{
+
 }

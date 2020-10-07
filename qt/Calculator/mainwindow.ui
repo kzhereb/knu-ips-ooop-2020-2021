@@ -209,7 +209,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QListWidget" name="lswHistory">
+   <widget class="QListView" name="lsvHistory">
     <property name="geometry">
      <rect>
       <x>410</x>

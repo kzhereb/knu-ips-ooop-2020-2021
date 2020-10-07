@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 #include <QKeyEvent>
+#include <QStringListModel>
 
 namespace Ui {
 class MainWindow;
@@ -15,7 +16,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 
 private slots:
     void on_btn_Num1_clicked();
@@ -44,11 +45,16 @@ private slots:
 
     void on_lswHistory_itemDoubleClicked(QListWidgetItem *item);
 
+    void on_lswHistory_doubleClicked(const QModelIndex &index);
+
 protected:
     void keyPressEvent(QKeyEvent* event) override;
 
 private:
     Ui::MainWindow *ui;
+
+    QStringListModel *model;
+
     int operand1;
     QString operation="";
 
