@@ -173,7 +173,8 @@ TEST_CASE("smart pointers and object lifetime - smart pointer in container") {
 			CHECK(ptest.use_count() == 1);
 			CHECK(ptest->value == 5);
 			weak_test = ptest;
-			CHECK(weak_test.lock()->value ==  5);
+			bool complex_expression = weak_test.lock()->value ==  5 && weak_test.use_count() == 2;
+			CHECK(complex_expression);
 			CHECK(ptest.use_count() == 1);
 			CHECK(weak_test.use_count() == 1);
 		}
