@@ -18,26 +18,6 @@ public:
     ~MainWindow() override;
 
 private slots:
-    void on_btn_Num1_clicked();
-
-    void on_btn_Num2_clicked();
-
-    void on_btn_Num3_clicked();
-
-    void on_btn_Num4_clicked();
-
-    void on_btn_Num5_clicked();
-
-    void on_btn_Num6_clicked();
-
-    void on_btn_Num7_clicked();
-
-    void on_btn_Num8_clicked();
-
-    void on_btn_Num9_clicked();
-
-    void on_btn_Num0_clicked();
-
     void on_btnPlus_clicked();
 
     void on_btnEquals_clicked();
@@ -59,6 +39,8 @@ private:
     QString operation="";
 
     const int MAX_HISTORY_SIZE = 9;
+
+    void add_number_buttons();
 
     void number_clicked(int number);
     void operation_clicked(QString operation);

@@ -20,7 +20,14 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,1" columnminimumwidth="200,100,0">
+   <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0">
+    <item row="2" column="2">
+     <widget class="QListView" name="lsvHistory">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0" colspan="2">
      <widget class="QLabel" name="lbl_Result">
       <property name="text">
@@ -28,147 +35,11 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0" rowspan="2" alignment="Qt::AlignVCenter">
-     <widget class="QGroupBox" name="groupBox">
-      <property name="minimumSize">
-       <size>
-        <width>200</width>
-        <height>270</height>
-       </size>
+    <item row="1" column="2">
+     <widget class="QLabel" name="lblHistory">
+      <property name="text">
+       <string>History</string>
       </property>
-      <property name="title">
-       <string>GroupBox</string>
-      </property>
-      <widget class="QPushButton" name="btn_Num1">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>30</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_Num2">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>30</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>2</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_Num3">
-       <property name="geometry">
-        <rect>
-         <x>140</x>
-         <y>30</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>3</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_Num4">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>90</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>4</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_Num6">
-       <property name="geometry">
-        <rect>
-         <x>140</x>
-         <y>90</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>6</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_Num5">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>90</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>5</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_Num7">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>150</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>7</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_Num9">
-       <property name="geometry">
-        <rect>
-         <x>140</x>
-         <y>150</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>9</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_Num8">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>150</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>8</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_Num0">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>200</y>
-         <width>41</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>0</string>
-       </property>
-      </widget>
      </widget>
     </item>
     <item row="1" column="1" rowspan="2" alignment="Qt::AlignVCenter">
@@ -210,18 +81,18 @@
       </widget>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QLabel" name="lblHistory">
-      <property name="text">
-       <string>History</string>
+    <item row="1" column="0" rowspan="2">
+     <widget class="QGroupBox" name="grbNumbers">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>270</height>
+       </size>
       </property>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QListView" name="lsvHistory">
-      <property name="editTriggers">
-       <set>QAbstractItemView::NoEditTriggers</set>
+      <property name="title">
+       <string>GroupBox</string>
       </property>
+      <layout class="QGridLayout" name="gridNumbers"/>
      </widget>
     </item>
    </layout>

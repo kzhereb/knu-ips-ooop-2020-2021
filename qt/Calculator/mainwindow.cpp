@@ -10,12 +10,26 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    add_number_buttons();
+
     ui->lsvHistory->setModel(model);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::add_number_buttons()
+{
+    for(int i=0;i<=9;i++) {
+        QPushButton* button = new QPushButton(QString::number(i));
+        int row = (i != 0) ? (i-1)/3 : 3;
+        int column = (i != 0) ? (i-1) % 3: 1;
+        connect(button, &QPushButton::clicked,
+                [this, i] { this->number_clicked(i); });
+        ui->gridNumbers->addWidget(button,row, column);
+    }
 }
 
 void MainWindow::number_clicked(int number)
@@ -66,55 +80,6 @@ void MainWindow::add_history(const QString &operation, int operand1, int operand
 
 }
 
-void MainWindow::on_btn_Num1_clicked()
-{
-    number_clicked(1);
-}
-
-void MainWindow::on_btn_Num2_clicked()
-{
-    number_clicked(2);
-}
-
-void MainWindow::on_btn_Num3_clicked()
-{
-    number_clicked(3);
-}
-
-void MainWindow::on_btn_Num4_clicked()
-{
-    number_clicked(4);
-}
-
-void MainWindow::on_btn_Num5_clicked()
-{
-    number_clicked(5);
-}
-
-void MainWindow::on_btn_Num6_clicked()
-{
-    number_clicked(6);
-}
-
-void MainWindow::on_btn_Num7_clicked()
-{
-    number_clicked(7);
-}
-
-void MainWindow::on_btn_Num8_clicked()
-{
-    number_clicked(8);
-}
-
-void MainWindow::on_btn_Num9_clicked()
-{
-    number_clicked(9);
-}
-
-void MainWindow::on_btn_Num0_clicked()
-{
-    number_clicked(0);
-}
 
 void MainWindow::on_btnPlus_clicked()
 {
@@ -148,6 +113,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         number_clicked(result);
     }
 }
+
+
 
 
 
