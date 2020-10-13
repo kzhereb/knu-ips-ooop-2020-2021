@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.4
+import QtMultimedia 5.9
 import QtQuick.Window 2.2
 
 Window {
@@ -80,12 +81,20 @@ Window {
             }
         }
 
+        SoundEffect{
+            id: buttonSound
+            source: "buttonsound.wav"
+        }
+
         Button {
             text: "Save"
-            onClicked: backend.save(surname.text,
+            onClicked: {
+                backend.save(surname.text,
                                     name.text,
                                     group.currentText,
-                                    avgGrade.realValue)
+                                    avgGrade.realValue);
+                buttonSound.play();
+            }
         }
     }
 }

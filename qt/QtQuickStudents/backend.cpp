@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QTextStream>
 
+
 Backend::Backend(QObject *parent) : QObject(parent)
 {
 
@@ -20,4 +21,5 @@ void Backend::save(const QString &surname, const QString &name, const QString &g
           << group<<"\n"
           << avgGrade<<"\n\n";
     file.close();
+    // QApplication::beep(); // requires widgets
 }
