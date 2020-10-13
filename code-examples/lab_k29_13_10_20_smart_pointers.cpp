@@ -161,3 +161,25 @@ TEST_CASE("smart pointers and object lifetime - moving unique_ptr") {
 	CHECK(out.str() == "default constructor\ndestructor 5\n");
 }
 
+
+TEST_CASE("smart pointers and object lifetime - smart pointer in container") {
+	std::stringstream out;
+	Test::out = &out;
+	{
+		std::weak_ptr<Test> weak_test;
+		{
+			std::shared_ptr<Test> ptest = std::make_shared<Test>();
+			CHECK(out.str() == "default constructor\n");
+			CHECK(ptest.use_count() == 1);
+			CHECK(ptest->value == 5);
+			weak_test = ptest;
+			CHECK(weak_test.lock()->value ==  5);
+			CHECK(ptest.use_count() == 1);
+			CHECK(weak_test.use_count() == 1);
+		}
+		CHECK(weak_test.use_count() == 0);
+		CHECK(out.str() == "default constructor\ndestructor 5\n");
+	}
+	CHECK(out.str() == "default constructor\ndestructor 5\n");
+}
+
