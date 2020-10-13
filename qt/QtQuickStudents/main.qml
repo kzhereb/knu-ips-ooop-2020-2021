@@ -19,6 +19,7 @@ Window {
             }
 
             TextField {
+                id: surname
 
             }
         }
@@ -30,7 +31,7 @@ Window {
             }
 
             TextField {
-
+                id: name
             }
         }
 
@@ -41,6 +42,7 @@ Window {
             }
 
             ComboBox {
+                id: group
                 model: ["K-28", "K-29"]
             }
         }
@@ -52,7 +54,7 @@ Window {
             }
 
             SpinBox {
-                id: spinbox
+                id: avgGrade
                 from: 0
                 value: 75 * 100
                 to: 100 * 100
@@ -64,18 +66,26 @@ Window {
                 property real realValue: value / 100
 
                 validator: DoubleValidator {
-                    bottom: Math.min(spinbox.from, spinbox.to)
-                    top:  Math.max(spinbox.from, spinbox.to)
+                    bottom: Math.min(avgGrade.from, avgGrade.to)
+                    top:  Math.max(avgGrade.from, avgGrade.to)
                 }
 
                 textFromValue: function(value, locale) {
-                    return Number(value / 100).toLocaleString(locale, 'f', spinbox.decimals)
+                    return Number(value / 100).toLocaleString(locale, 'f', avgGrade.decimals)
                 }
 
                 valueFromText: function(text, locale) {
                     return Number.fromLocaleString(locale, text) * 100
                 }
             }
+        }
+
+        Button {
+            text: "Save"
+            onClicked: backend.save(surname.text,
+                                    name.text,
+                                    group.currentText,
+                                    avgGrade.realValue)
         }
     }
 }
