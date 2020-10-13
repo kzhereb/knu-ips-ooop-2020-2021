@@ -40,6 +40,24 @@ public:
 };
 
 
+class ContainerUnique {
+private:
+	std::vector<std::unique_ptr<Test>> stored;
+public:
+	void store(Test* test) {
+		stored.push_back(std::unique_ptr<Test>(test) );
+	}
+	int sum() const {
+		int result = 0;
+		for(const auto& item:stored) {
+			result += item->value;
+		}
+		return result;
+	}
+};
+
+
+
 TEST_CASE("smart pointers and object lifetime - stack") {
 	std::stringstream out;
 	Test::out = &out;
@@ -81,6 +99,36 @@ TEST_CASE("smart pointers and object lifetime - smart pointer in container") {
 			CHECK(out.str() == "default constructor\n");
 			CHECK(ptest->value == 5);
 			container.store(ptest);
+			CHECK(container.sum() == 5);
+		}
+		CHECK(container.sum() == 5);
+		CHECK(out.str() == "default constructor\n");
+	}
+	CHECK(out.str() == "default constructor\ndestructor 5\n");
+}
+
+TEST_CASE("smart pointers and object lifetime - smart pointer (unique_ptr)") {
+	std::stringstream out;
+	Test::out = &out;
+	{
+		std::unique_ptr<Test> ptest = std::make_unique<Test>();
+		CHECK(out.str() == "default constructor\n");
+		CHECK(ptest->value == 5);
+	}
+	CHECK(out.str() == "default constructor\ndestructor 5\n");
+}
+
+TEST_CASE("smart pointers and object lifetime - smart pointer in container") {
+	std::stringstream out;
+	Test::out = &out;
+	{
+		ContainerUnique container;
+		{
+			std::unique_ptr<Test> ptest = std::make_unique<Test>();
+			CHECK(out.str() == "default constructor\n");
+			CHECK(ptest->value == 5);
+			container.store(ptest.release());
+			CHECK(ptest.get() == nullptr);
 			CHECK(container.sum() == 5);
 		}
 		CHECK(container.sum() == 5);
