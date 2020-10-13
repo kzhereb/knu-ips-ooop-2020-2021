@@ -19,6 +19,7 @@ public:
 	int value;
 	Test() {*out<<"default constructor"<<std::endl; value = 5;}
 	Test(const Test& that) { *out<<"copy constructor "<<that.value<<std::endl; value = that.value + 100; }
+	Test(Test&& that) { *out<<"move constructor "<<that.value<<std::endl; value = that.value + 10000; that.value = -that.value; }
 	~Test() {*out<<"destructor "<<value<<std::endl;}
 };
 std::ostream* Test::out = nullptr;
@@ -46,6 +47,9 @@ private:
 public:
 	void store(Test* test) {
 		stored.push_back(std::unique_ptr<Test>(test) );
+	}
+	void store(std::unique_ptr<Test>&& test) {
+		stored.push_back(std::move(test));
 	}
 	int sum() const {
 		int result = 0;
@@ -100,6 +104,7 @@ TEST_CASE("smart pointers and object lifetime - smart pointer in container") {
 			CHECK(ptest->value == 5);
 			container.store(ptest);
 			CHECK(container.sum() == 5);
+			CHECK(ptest->value == 5);
 		}
 		CHECK(container.sum() == 5);
 		CHECK(out.str() == "default constructor\n");
@@ -128,6 +133,25 @@ TEST_CASE("smart pointers and object lifetime - smart pointer in container") {
 			CHECK(out.str() == "default constructor\n");
 			CHECK(ptest->value == 5);
 			container.store(ptest.release());
+			CHECK(ptest.get() == nullptr);
+			CHECK(container.sum() == 5);
+		}
+		CHECK(container.sum() == 5);
+		CHECK(out.str() == "default constructor\n");
+	}
+	CHECK(out.str() == "default constructor\ndestructor 5\n");
+}
+
+TEST_CASE("smart pointers and object lifetime - moving unique_ptr") {
+	std::stringstream out;
+	Test::out = &out;
+	{
+		ContainerUnique container;
+		{
+			std::unique_ptr<Test> ptest = std::make_unique<Test>();
+			CHECK(out.str() == "default constructor\n");
+			CHECK(ptest->value == 5);
+			container.store(std::move(ptest));
 			CHECK(ptest.get() == nullptr);
 			CHECK(container.sum() == 5);
 		}
