@@ -40,6 +40,21 @@ void Student::setAvgGrade(double avgGrade)
     _avgGrade = avgGrade;
 }
 
+QString Student::fullName() const
+{
+    return _name + " " + _surname;
+}
+
+QString Student::description() const
+{
+    return _description;
+}
+
+void Student::setDescription(const QString &description)
+{
+    _description = description;
+}
+
 Student::Student()
 {
 

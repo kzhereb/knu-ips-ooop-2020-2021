@@ -111,3 +111,13 @@ void MainWindow::on_btnLoad_clicked()
 {
     load_from_file();
 }
+
+void MainWindow::on_btnDetails_clicked()
+{
+    Student student{ui->inpSurname->text(),
+                   ui->inpName->text(),
+                   ui->inpGroup->currentText(),
+                   ui->inpAvgGrade->value()};
+    detailsWindow.setStudent(student);
+    detailsWindow.show();
+}

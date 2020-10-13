@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "student.h"
+#include "studentdetailswindow.h"
 
 #include <QMainWindow>
 
@@ -24,8 +25,12 @@ private slots:
 
     void on_btnLoad_clicked();
 
+    void on_btnDetails_clicked();
+
 private:
     Ui::MainWindow *ui;
+
+    StudentDetailsWindow detailsWindow;
 
     void add_student_to_table(const Student& student);
     void load_from_file();

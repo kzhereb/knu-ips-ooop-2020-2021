@@ -10,6 +10,7 @@ private:
     QString _name;
     QString _group;
     double _avgGrade;
+    QString _description;
 public:
     Student();
     explicit Student(const QString &surname,
@@ -25,6 +26,10 @@ public:
     void setGroup(const QString &group);
     double avgGrade() const;
     void setAvgGrade(double avgGrade);
+    QString description() const;
+    void setDescription(const QString &description);
+
+    QString fullName() const;
 };
 
 #endif // STUDENT_H
