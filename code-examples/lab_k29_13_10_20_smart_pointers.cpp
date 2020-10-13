@@ -10,23 +10,82 @@
 #include <ostream>
 #include <iostream>
 #include <sstream>
+#include <memory>
+#include <vector>
 
 class Test {
 public:
 	static std::ostream* out;
-	Test() {*out<<"default constructor"<<std::endl;}
-	~Test() {*out<<"destructor"<<std::endl;}
+	int value;
+	Test() {*out<<"default constructor"<<std::endl; value = 5;}
+	Test(const Test& that) { *out<<"copy constructor "<<that.value<<std::endl; value = that.value + 100; }
+	~Test() {*out<<"destructor "<<value<<std::endl;}
 };
 std::ostream* Test::out = nullptr;
 
+class Container {
+private:
+	std::vector<std::shared_ptr<Test>> stored;
+public:
+	void store(std::shared_ptr<Test> test) {
+		stored.push_back(test);
+	}
+	int sum() const {
+		int result = 0;
+		for(auto item:stored) {
+			result += item->value;
+		}
+		return result;
+	}
+};
 
-TEST_CASE("smart pointers and object lifetime") {
+
+TEST_CASE("smart pointers and object lifetime - stack") {
 	std::stringstream out;
 	Test::out = &out;
 	{
 		Test test;
 		CHECK(out.str() == "default constructor\n");
 	}
-	CHECK(out.str() == "default constructor\ndestructor\n");
+	CHECK(out.str() == "default constructor\ndestructor 5\n");
+}
+
+TEST_CASE("smart pointers and object lifetime - heap") {
+	std::stringstream out;
+	Test::out = &out;
+
+	Test* ptest = new Test;
+	CHECK(out.str() == "default constructor\n");
+	delete ptest;
+	CHECK(out.str() == "default constructor\ndestructor 5\n");
+}
+
+TEST_CASE("smart pointers and object lifetime - smart pointer") {
+	std::stringstream out;
+	Test::out = &out;
+	{
+		std::shared_ptr<Test> ptest = std::make_shared<Test>();
+		CHECK(out.str() == "default constructor\n");
+		CHECK(ptest->value == 5);
+	}
+	CHECK(out.str() == "default constructor\ndestructor 5\n");
+}
+
+TEST_CASE("smart pointers and object lifetime - smart pointer in container") {
+	std::stringstream out;
+	Test::out = &out;
+	{
+		Container container;
+		{
+			std::shared_ptr<Test> ptest = std::make_shared<Test>();
+			CHECK(out.str() == "default constructor\n");
+			CHECK(ptest->value == 5);
+			container.store(ptest);
+			CHECK(container.sum() == 5);
+		}
+		CHECK(container.sum() == 5);
+		CHECK(out.str() == "default constructor\n");
+	}
+	CHECK(out.str() == "default constructor\ndestructor 5\n");
 }
 
