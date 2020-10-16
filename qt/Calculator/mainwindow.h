@@ -3,7 +3,9 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
-#include <QStringListModel>
+//#include <QStringListModel>
+#include <QStandardItemModel>
+
 
 namespace Ui {
 class MainWindow;
@@ -27,13 +29,16 @@ private slots:
 
     void on_lsvHistory_doubleClicked(const QModelIndex &index);
 
+    void on_btnClear_clicked();
+
 protected:
     void keyPressEvent(QKeyEvent* event) override;
 
 private:
     Ui::MainWindow *ui;
 
-    QStringListModel *model;
+    //QStringListModel *model;
+    QStandardItemModel *model;
 
     int operand1;
     QString operation="";

@@ -6,13 +6,14 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    model(new QStringListModel)
+    model(new QStandardItemModel)
 {
     ui->setupUi(this);
 
     add_number_buttons();
 
     ui->lsvHistory->setModel(model);
+    //ui->lsvHistory->setStyleSheet("QListView::item:selected {\n    background: red;\n}");
 }
 
 MainWindow::~MainWindow()
@@ -70,14 +71,17 @@ void MainWindow::add_history(const QString &operation, int operand1, int operand
                 QString::number(operand2),
                 QString::number(result));
     int history_size = model->rowCount();
+    qDebug()<<history_size;
     if (history_size >= MAX_HISTORY_SIZE) {
         model->removeRow(0);
         history_size--;
     }
     model->insertRow(history_size);
-    QModelIndex index = model->index(history_size);
-    model->setData(index,history);
-
+    auto item = new QStandardItem( history );
+    if (result > 100) {
+        item->setBackground(QBrush(Qt::red));
+    }
+    model->setItem(history_size, item );
 }
 
 
@@ -148,4 +152,11 @@ void MainWindow::on_lsvHistory_doubleClicked(const QModelIndex &index)
         }
 
     }
+}
+
+void MainWindow::on_btnClear_clicked()
+{
+    ui->lbl_Result->setText("0");
+    this->operation = "";
+    this->operand1 = 0;
 }
