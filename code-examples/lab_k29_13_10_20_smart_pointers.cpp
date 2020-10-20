@@ -57,6 +57,9 @@ public:
 	void store(std::unique_ptr<Test>&& test) {
 		stored.push_back(std::move(test));
 	}
+	void dont_store(std::unique_ptr<Test>&& test) {
+		//stored.push_back(std::move(test));
+	}
 	int sum() const {
 		int result = 0;
 		for(const auto& item:stored) {
@@ -169,6 +172,11 @@ TEST_CASE("smart pointers and object lifetime - moving unique_ptr") {
 			std::unique_ptr<Test> ptest = std::make_unique<Test>();
 			CHECK(out.str() == "default constructor\n");
 			CHECK(ptest->value == 5);
+
+			container.dont_store(std::move(ptest)); // move is not performed here!
+			CHECK(ptest.get() != nullptr);
+			CHECK(ptest->value == 5);
+
 			container.store(std::move(ptest));
 			CHECK(ptest.get() == nullptr);
 			CHECK(container.sum() == 5);
