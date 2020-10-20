@@ -188,7 +188,7 @@ TEST_CASE("smart pointers and object lifetime - moving unique_ptr") {
 }
 
 
-TEST_CASE("smart pointers and object lifetime - smart pointer in container") {
+TEST_CASE("smart pointers and object lifetime - weak pointer") {
 	std::stringstream out;
 	Test::out = &out;
 	{
