@@ -38,6 +38,12 @@ public:
 		}
 		return result;
 	}
+	std::shared_ptr<Test> get(std::size_t index) {
+		return stored[index];
+	}
+	std::size_t get_use_count(std::size_t index) {
+		return stored[index].use_count();
+	}
 };
 
 
@@ -102,12 +108,24 @@ TEST_CASE("smart pointers and object lifetime - smart pointer in container") {
 			std::shared_ptr<Test> ptest = std::make_shared<Test>();
 			CHECK(out.str() == "default constructor\n");
 			CHECK(ptest->value == 5);
+			CHECK(ptest.use_count() == 1 );
 			container.store(ptest);
 			CHECK(container.sum() == 5);
 			CHECK(ptest->value == 5);
+			CHECK(ptest.use_count() == 2 );
 		}
 		CHECK(container.sum() == 5);
 		CHECK(out.str() == "default constructor\n");
+		CHECK(container.get(0).use_count() == 2); // temporary std::shared_ptr increases use_count
+		CHECK(container.get_use_count(0) == 1); //temporary object from previous line already deleted
+
+		{
+			std::shared_ptr<Test> pstored = container.get(0);
+			CHECK(pstored.use_count() == 2);
+			CHECK(container.get_use_count(0) == 2);
+		}
+		CHECK(container.get_use_count(0) == 1);
+
 	}
 	CHECK(out.str() == "default constructor\ndestructor 5\n");
 }
