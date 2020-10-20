@@ -24,6 +24,15 @@ public:
 };
 std::ostream* Test::out = nullptr;
 
+class TestRef {
+public:
+	std::shared_ptr<Test> data;
+	std::shared_ptr<TestRef> ref;
+	TestRef(std::shared_ptr<Test> data, std::shared_ptr<TestRef> ref=std::shared_ptr<TestRef>()):
+		data(data), ref(ref) {}
+};
+
+
 class Container {
 private:
 	std::vector<std::shared_ptr<Test>> stored;
@@ -229,4 +238,35 @@ TEST_CASE("move semantics for Test class") {
 		CHECK(test.value == -5);
 	}
 	CHECK(out.str() == "default constructor\nmove constructor 5\ndestructor 10005\ndestructor -5\n");
+}
+
+TEST_CASE("TestRef no circular reference") {
+	std::stringstream out;
+	Test::out = &out;
+	{
+		std::shared_ptr<Test> ptest = std::make_shared<Test>();
+		CHECK(out.str() == "default constructor\n");
+		CHECK(ptest.use_count() == 1);
+		CHECK(ptest->value == 5);
+		TestRef ref{ptest};
+		CHECK(ptest.use_count() == 2);
+	}
+	CHECK(out.str() == "default constructor\ndestructor 5\n");
+}
+
+TEST_CASE("TestRef circular reference") {
+	std::stringstream out;
+	Test::out = &out;
+	{
+		std::shared_ptr<Test> ptest = std::make_shared<Test>();
+		CHECK(out.str() == "default constructor\n");
+		CHECK(ptest.use_count() == 1);
+		CHECK(ptest->value == 5);
+		std::shared_ptr<TestRef> ref1 = std::make_shared<TestRef>(ptest);
+		CHECK(ptest.use_count() == 2);
+		std::shared_ptr<TestRef> ref2 = std::make_shared<TestRef>(ptest,ref1);
+		CHECK(ptest.use_count() == 3);
+		ref1->ref = ref2;
+	}
+	CHECK(out.str() == "default constructor\n"); // destructor not called, circular reference
 }
