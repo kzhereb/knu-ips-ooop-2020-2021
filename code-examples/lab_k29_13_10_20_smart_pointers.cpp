@@ -203,9 +203,16 @@ TEST_CASE("smart pointers and object lifetime - weak pointer") {
 			CHECK(complex_expression);
 			CHECK(ptest.use_count() == 1);
 			CHECK(weak_test.use_count() == 1);
+			CHECK_FALSE(weak_test.expired());
 		}
-		CHECK(weak_test.use_count() == 0);
 		CHECK(out.str() == "default constructor\ndestructor 5\n");
+		CHECK(weak_test.use_count() == 0);
+		CHECK(weak_test.expired());
+		std::shared_ptr<Test> ptest = weak_test.lock();
+		CHECK(weak_test.use_count() == 0);
+		CHECK(ptest.use_count() == 0);
+		CHECK(ptest.get() == nullptr);
+
 	}
 	CHECK(out.str() == "default constructor\ndestructor 5\n");
 }
