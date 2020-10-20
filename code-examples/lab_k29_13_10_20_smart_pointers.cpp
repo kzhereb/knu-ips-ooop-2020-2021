@@ -210,3 +210,16 @@ TEST_CASE("smart pointers and object lifetime - smart pointer in container") {
 	CHECK(out.str() == "default constructor\ndestructor 5\n");
 }
 
+TEST_CASE("move semantics for Test class") {
+	std::stringstream out;
+	Test::out = &out;
+	{
+		Test test;
+		CHECK(out.str() == "default constructor\n");
+		Test test2{std::move(test)};
+		CHECK(out.str() == "default constructor\nmove constructor 5\n");
+		CHECK(test2.value == 10005);
+		CHECK(test.value == -5);
+	}
+	CHECK(out.str() == "default constructor\nmove constructor 5\ndestructor 10005\ndestructor -5\n");
+}
