@@ -1,0 +1,188 @@
+\hypertarget{class_doubly_linked_list}{}\doxysection{Doubly\+Linked\+List$<$ T $>$ Class Template Reference}
+\label{class_doubly_linked_list}\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+
+
+Doubly linked list.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_doubly_linked_list_ab16fd160493247d26572b9bef7fa078b}{Doubly\+Linked\+List}} ()
+\item 
+\mbox{\hyperlink{class_doubly_linked_list_ade7fbfd3c437d039c88ea9c3b9445150}{$\sim$\+Doubly\+Linked\+List}} ()
+\item 
+void \mbox{\hyperlink{class_doubly_linked_list_a64c003379d677209f33c5408310055a5}{append}} (T value)
+\begin{DoxyCompactList}\small\item\em Append value to the end of this list. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_doubly_linked_list_a988dab817e94dc8f7b0e8e5b90383971}{clear}} ()
+\item 
+int \mbox{\hyperlink{class_doubly_linked_list_a4736cf9983c4b4f551c841aecc73445d}{operator\mbox{[}$\,$\mbox{]}}} (std\+::size\+\_\+t index)
+\begin{DoxyCompactList}\small\item\em Access items by index. \end{DoxyCompactList}\item 
+std\+::size\+\_\+t \mbox{\hyperlink{class_doubly_linked_list_a6f22b0bfd96a9664259bf10fd51558e5}{size}} ()
+\item 
+std\+::size\+\_\+t \mbox{\hyperlink{class_doubly_linked_list_a907e6da8c068a45f7ab3934cb03168fd}{size\+\_\+naive}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_doubly_linked_list_af1f3a02ff6b362b16647964eb7767b0f}{begin}}
+\item 
+\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{class_doubly_linked_list_a31e57398ae1a096ae077c39f16350066}{end}}
+\item 
+std\+::size\+\_\+t \mbox{\hyperlink{class_doubly_linked_list_acd87134dec640874a9bcc1d2b80d9ac1}{\+\_\+size}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{class_doubly_linked_list_a4a131c30cd5868507514f5b52915a84d}{operator$<$$<$}} (std\+::ostream \&out, const \mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$ \&list)
+\item 
+void \mbox{\hyperlink{class_doubly_linked_list_ae592ab8a224a90fa29384cf5511c827b}{test\+\_\+doubly\+\_\+linked\+\_\+list\+::test\+\_\+create\+\_\+append\+\_\+clear}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class Doubly\+Linked\+List$<$ T $>$}
+
+Doubly linked list. 
+
+Stores a sequence of values using nodes (\mbox{\hyperlink{struct_list_node}{List\+Node}} objects) for each value linked with next and previous pointers, See \href{https://en.wikipedia.org/wiki/Doubly_linked_list}{\texttt{ Doubly Linked List}} 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_doubly_linked_list_ab16fd160493247d26572b9bef7fa078b}\label{class_doubly_linked_list_ab16fd160493247d26572b9bef7fa078b}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!DoublyLinkedList@{DoublyLinkedList}}
+\index{DoublyLinkedList@{DoublyLinkedList}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DoublyLinkedList()}{DoublyLinkedList()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$\+::\mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_doubly_linked_list_ade7fbfd3c437d039c88ea9c3b9445150}\label{class_doubly_linked_list_ade7fbfd3c437d039c88ea9c3b9445150}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!````~DoublyLinkedList@{$\sim$DoublyLinkedList}}
+\index{````~DoublyLinkedList@{$\sim$DoublyLinkedList}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$DoublyLinkedList()}{~DoublyLinkedList()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$\+::$\sim$\mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=331pt]{class_doubly_linked_list_ade7fbfd3c437d039c88ea9c3b9445150_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_doubly_linked_list_a64c003379d677209f33c5408310055a5}\label{class_doubly_linked_list_a64c003379d677209f33c5408310055a5}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!append@{append}}
+\index{append@{append}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{append()}{append()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$\+::append (\begin{DoxyParamCaption}\item[{T}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Append value to the end of this list. 
+
+Creates a new node containing this value, inserts it at the end of list.
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & a value to be appended \\
+\hline
+\end{DoxyParams}
+\begin{DoxyPostcond}{Postcondition}
+List size is increased by 1 
+\end{DoxyPostcond}
+\mbox{\Hypertarget{class_doubly_linked_list_a988dab817e94dc8f7b0e8e5b90383971}\label{class_doubly_linked_list_a988dab817e94dc8f7b0e8e5b90383971}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!clear@{clear}}
+\index{clear@{clear}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_doubly_linked_list_a4736cf9983c4b4f551c841aecc73445d}\label{class_doubly_linked_list_a4736cf9983c4b4f551c841aecc73445d}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+int \mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{std\+::size\+\_\+t}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Access items by index. 
+
+Complexity is O(n) 
+\begin{DoxyParams}{Parameters}
+{\em index} & zero-\/based index of item to get \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::out\+\_\+of\+\_\+range} & if index is too large (greater or equals to list size) \\
+\hline
+\end{DoxyExceptions}
+\begin{DoxyReturn}{Returns}
+value of item 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_doubly_linked_list_a6f22b0bfd96a9664259bf10fd51558e5}\label{class_doubly_linked_list_a6f22b0bfd96a9664259bf10fd51558e5}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!size@{size}}
+\index{size@{size}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::size\+\_\+t \mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_doubly_linked_list_a907e6da8c068a45f7ab3934cb03168fd}\label{class_doubly_linked_list_a907e6da8c068a45f7ab3934cb03168fd}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!size\_naive@{size\_naive}}
+\index{size\_naive@{size\_naive}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{size\_naive()}{size\_naive()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::size\+\_\+t \mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$\+::size\+\_\+naive (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_doubly_linked_list_a4a131c30cd5868507514f5b52915a84d}\label{class_doubly_linked_list_a4a131c30cd5868507514f5b52915a84d}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::ostream\& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{out,  }\item[{const \mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$ \&}]{list }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+\mbox{\Hypertarget{class_doubly_linked_list_ae592ab8a224a90fa29384cf5511c827b}\label{class_doubly_linked_list_ae592ab8a224a90fa29384cf5511c827b}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!test\_doubly\_linked\_list::test\_create\_append\_clear@{test\_doubly\_linked\_list::test\_create\_append\_clear}}
+\index{test\_doubly\_linked\_list::test\_create\_append\_clear@{test\_doubly\_linked\_list::test\_create\_append\_clear}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{test\_doubly\_linked\_list::test\_create\_append\_clear}{test\_doubly\_linked\_list::test\_create\_append\_clear}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{namespacetest__doubly__linked__list_a07fe7085b2602fa2c93bd825e1b1ff5f}{test\+\_\+doubly\+\_\+linked\+\_\+list\+::test\+\_\+create\+\_\+append\+\_\+clear}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_doubly_linked_list_acd87134dec640874a9bcc1d2b80d9ac1}\label{class_doubly_linked_list_acd87134dec640874a9bcc1d2b80d9ac1}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!\_size@{\_size}}
+\index{\_size@{\_size}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{\_size}{\_size}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+std\+::size\+\_\+t \mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$\+::\+\_\+size\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_doubly_linked_list_af1f3a02ff6b362b16647964eb7767b0f}\label{class_doubly_linked_list_af1f3a02ff6b362b16647964eb7767b0f}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!begin@{begin}}
+\index{begin@{begin}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{begin}{begin}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$T$>$$\ast$ \mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$\+::begin\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_doubly_linked_list_a31e57398ae1a096ae077c39f16350066}\label{class_doubly_linked_list_a31e57398ae1a096ae077c39f16350066}} 
+\index{DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}!end@{end}}
+\index{end@{end}!DoublyLinkedList$<$ T $>$@{DoublyLinkedList$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{end}{end}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$T$>$$\ast$ \mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}}$<$ T $>$\+::end\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/prj/work/provotar/\+O\+O\+O\+P/2020-\/2021/demo/knu-\/ips-\/ooop-\/2020-\/2021/code-\/examples/list/\mbox{\hyperlink{list_8cpp}{list.\+cpp}}\end{DoxyCompactItemize}

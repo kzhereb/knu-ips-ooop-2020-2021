@@ -1,0 +1,75 @@
+\hypertarget{struct_list_node}{}\doxysection{List\+Node$<$ T $>$ Struct Template Reference}
+\label{struct_list_node}\index{ListNode$<$ T $>$@{ListNode$<$ T $>$}}
+
+
+A single node in doubly linked list.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_list_node_ac41345f5801a24ae7c687cd67e62f814}{List\+Node}} (T \mbox{\hyperlink{struct_list_node_a897034a3810748838c5a64524ece0ea0}{value}}, \mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$ $\ast$\mbox{\hyperlink{struct_list_node_a997ca532d810ebd030726ff880ba76b5}{prev}}=nullptr, \mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$ $\ast$\mbox{\hyperlink{struct_list_node_a97909c9598053ffd24b77ec715f745f1}{next}}=nullptr)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{struct_list_node}{List\+Node}} constructor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+T \mbox{\hyperlink{struct_list_node_a897034a3810748838c5a64524ece0ea0}{value}}
+\item 
+\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{struct_list_node_a997ca532d810ebd030726ff880ba76b5}{prev}}
+\item 
+\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$ $\ast$ \mbox{\hyperlink{struct_list_node_a97909c9598053ffd24b77ec715f745f1}{next}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+struct List\+Node$<$ T $>$}
+
+A single node in doubly linked list. 
+
+A single node holding a value and pointers to the next and previous nodes. Pointers can be empty (for first and last nodes). \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_doubly_linked_list}{Doubly\+Linked\+List}} 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{struct_list_node_ac41345f5801a24ae7c687cd67e62f814}\label{struct_list_node_ac41345f5801a24ae7c687cd67e62f814}} 
+\index{ListNode$<$ T $>$@{ListNode$<$ T $>$}!ListNode@{ListNode}}
+\index{ListNode@{ListNode}!ListNode$<$ T $>$@{ListNode$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ListNode()}{ListNode()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$\+::\mbox{\hyperlink{struct_list_node}{List\+Node}} (\begin{DoxyParamCaption}\item[{T}]{value,  }\item[{\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$ $\ast$}]{prev = {\ttfamily nullptr},  }\item[{\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$ $\ast$}]{next = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\mbox{\hyperlink{struct_list_node}{List\+Node}} constructor. 
+
+Value must be specified, previous and next pointers are optional. Can specify only previous without next (useful for append) 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{struct_list_node_a97909c9598053ffd24b77ec715f745f1}\label{struct_list_node_a97909c9598053ffd24b77ec715f745f1}} 
+\index{ListNode$<$ T $>$@{ListNode$<$ T $>$}!next@{next}}
+\index{next@{next}!ListNode$<$ T $>$@{ListNode$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{next}{next}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$T$>$$\ast$ \mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$\+::next}
+
+Pointer to the next node in the list, can be empty (nullptr) for the last node \mbox{\Hypertarget{struct_list_node_a997ca532d810ebd030726ff880ba76b5}\label{struct_list_node_a997ca532d810ebd030726ff880ba76b5}} 
+\index{ListNode$<$ T $>$@{ListNode$<$ T $>$}!prev@{prev}}
+\index{prev@{prev}!ListNode$<$ T $>$@{ListNode$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{prev}{prev}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{struct_list_node}{List\+Node}}$<$T$>$$\ast$ \mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$\+::prev}
+
+Pointer to the previous node in the list, can be empty (nullptr) for the first node \mbox{\Hypertarget{struct_list_node_a897034a3810748838c5a64524ece0ea0}\label{struct_list_node_a897034a3810748838c5a64524ece0ea0}} 
+\index{ListNode$<$ T $>$@{ListNode$<$ T $>$}!value@{value}}
+\index{value@{value}!ListNode$<$ T $>$@{ListNode$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+T \mbox{\hyperlink{struct_list_node}{List\+Node}}$<$ T $>$\+::value}
+
+Value stored in this node 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/prj/work/provotar/\+O\+O\+O\+P/2020-\/2021/demo/knu-\/ips-\/ooop-\/2020-\/2021/code-\/examples/list/\mbox{\hyperlink{list_8cpp}{list.\+cpp}}\end{DoxyCompactItemize}

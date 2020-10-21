@@ -1,0 +1,129 @@
+\hypertarget{lab__k29__13__10__20__smart__pointers_8cpp}{}\doxysection{D\+:/prj/work/provotar/\+O\+O\+O\+P/2020-\/2021/demo/knu-\/ips-\/ooop-\/2020-\/2021/code-\/examples/lab\+\_\+k29\+\_\+13\+\_\+10\+\_\+20\+\_\+smart\+\_\+pointers.cpp File Reference}
+\label{lab__k29__13__10__20__smart__pointers_8cpp}\index{D:/prj/work/provotar/OOOP/2020-\/2021/demo/knu-\/ips-\/ooop-\/2020-\/2021/code-\/examples/lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{D:/prj/work/provotar/OOOP/2020-\/2021/demo/knu-\/ips-\/ooop-\/2020-\/2021/code-\/examples/lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+{\ttfamily \#include \char`\"{}doctest.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$ostream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for lab\+\_\+k29\+\_\+13\+\_\+10\+\_\+20\+\_\+smart\+\_\+pointers.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{lab__k29__13__10__20__smart__pointers_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_test}{Test}}
+\item 
+class \mbox{\hyperlink{class_test_ref}{Test\+Ref}}
+\item 
+class \mbox{\hyperlink{class_container}{Container}}
+\item 
+class \mbox{\hyperlink{class_container_unique}{Container\+Unique}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{lab__k29__13__10__20__smart__pointers_8cpp_a8a9844e8c745415b40fdc7953649366c}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}smart pointers and object lifetime -\/ stack\char`\"{})
+\item 
+\mbox{\hyperlink{lab__k29__13__10__20__smart__pointers_8cpp_a9f7a3860af435baf03b68b9e01cfe100}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}smart pointers and object lifetime -\/ heap\char`\"{})
+\item 
+\mbox{\hyperlink{lab__k29__13__10__20__smart__pointers_8cpp_a44f3c1fb487455f270a040581bf9c6a6}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}smart pointers and object lifetime -\/ smart pointer\char`\"{})
+\item 
+\mbox{\hyperlink{lab__k29__13__10__20__smart__pointers_8cpp_a296746f8b261900b4a4b29d5deb9ab61}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}smart pointers and object lifetime -\/ smart pointer in container\char`\"{})
+\item 
+\mbox{\hyperlink{lab__k29__13__10__20__smart__pointers_8cpp_a693f728d080ba603203a4c6943daccc1}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}smart pointers and object lifetime -\/ smart pointer (unique\+\_\+ptr)\char`\"{})
+\item 
+\mbox{\hyperlink{lab__k29__13__10__20__smart__pointers_8cpp_a74fbd2ba9ee8431db6f1f201d16d1dd1}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}smart pointers and object lifetime -\/ moving unique\+\_\+ptr\char`\"{})
+\item 
+\mbox{\hyperlink{lab__k29__13__10__20__smart__pointers_8cpp_a0d29f522cffa71755407f8771e2d4e47}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}smart pointers and object lifetime -\/ weak pointer\char`\"{})
+\item 
+\mbox{\hyperlink{lab__k29__13__10__20__smart__pointers_8cpp_ad5f11d99a69d9ec9d5db10a6452f564c}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}move semantics for \mbox{\hyperlink{class_test}{Test}} class\char`\"{})
+\item 
+\mbox{\hyperlink{lab__k29__13__10__20__smart__pointers_8cpp_ab03f1afec337047cbf3d8a59d9a2bfb4}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}Test\+Ref no circular reference\char`\"{})
+\item 
+\mbox{\hyperlink{lab__k29__13__10__20__smart__pointers_8cpp_ab9bca29ddcbdb371559bafca61ea78f6}{T\+E\+S\+T\+\_\+\+C\+A\+SE}} (\char`\"{}Test\+Ref circular reference\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{lab__k29__13__10__20__smart__pointers_8cpp_ad5f11d99a69d9ec9d5db10a6452f564c}\label{lab__k29__13__10__20__smart__pointers_8cpp_ad5f11d99a69d9ec9d5db10a6452f564c}} 
+\index{lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/10]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}move semantics for \mbox{\hyperlink{class_test}{Test}} class\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lab__k29__13__10__20__smart__pointers_8cpp_a9f7a3860af435baf03b68b9e01cfe100}\label{lab__k29__13__10__20__smart__pointers_8cpp_a9f7a3860af435baf03b68b9e01cfe100}} 
+\index{lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/10]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}smart pointers and object lifetime -\/ heap\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lab__k29__13__10__20__smart__pointers_8cpp_a74fbd2ba9ee8431db6f1f201d16d1dd1}\label{lab__k29__13__10__20__smart__pointers_8cpp_a74fbd2ba9ee8431db6f1f201d16d1dd1}} 
+\index{lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [3/10]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}smart pointers and object lifetime -\/ moving unique\+\_\+ptr\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=305pt]{lab__k29__13__10__20__smart__pointers_8cpp_a74fbd2ba9ee8431db6f1f201d16d1dd1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{lab__k29__13__10__20__smart__pointers_8cpp_a693f728d080ba603203a4c6943daccc1}\label{lab__k29__13__10__20__smart__pointers_8cpp_a693f728d080ba603203a4c6943daccc1}} 
+\index{lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [4/10]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}smart pointers and object lifetime -\/ smart pointer (unique\+\_\+ptr)\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lab__k29__13__10__20__smart__pointers_8cpp_a296746f8b261900b4a4b29d5deb9ab61}\label{lab__k29__13__10__20__smart__pointers_8cpp_a296746f8b261900b4a4b29d5deb9ab61}} 
+\index{lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [5/10]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}smart pointers and object lifetime -\/ smart pointer in container\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=287pt]{lab__k29__13__10__20__smart__pointers_8cpp_a296746f8b261900b4a4b29d5deb9ab61_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{lab__k29__13__10__20__smart__pointers_8cpp_a44f3c1fb487455f270a040581bf9c6a6}\label{lab__k29__13__10__20__smart__pointers_8cpp_a44f3c1fb487455f270a040581bf9c6a6}} 
+\index{lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [6/10]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}smart pointers and object lifetime -\/ smart pointer\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lab__k29__13__10__20__smart__pointers_8cpp_a8a9844e8c745415b40fdc7953649366c}\label{lab__k29__13__10__20__smart__pointers_8cpp_a8a9844e8c745415b40fdc7953649366c}} 
+\index{lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [7/10]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}smart pointers and object lifetime -\/ stack\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lab__k29__13__10__20__smart__pointers_8cpp_a0d29f522cffa71755407f8771e2d4e47}\label{lab__k29__13__10__20__smart__pointers_8cpp_a0d29f522cffa71755407f8771e2d4e47}} 
+\index{lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [8/10]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}smart pointers and object lifetime -\/ weak pointer\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lab__k29__13__10__20__smart__pointers_8cpp_ab9bca29ddcbdb371559bafca61ea78f6}\label{lab__k29__13__10__20__smart__pointers_8cpp_ab9bca29ddcbdb371559bafca61ea78f6}} 
+\index{lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [9/10]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}Test\+Ref circular reference\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{lab__k29__13__10__20__smart__pointers_8cpp_ab03f1afec337047cbf3d8a59d9a2bfb4}\label{lab__k29__13__10__20__smart__pointers_8cpp_ab03f1afec337047cbf3d8a59d9a2bfb4}} 
+\index{lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}!TEST\_CASE@{TEST\_CASE}}
+\index{TEST\_CASE@{TEST\_CASE}!lab\_k29\_13\_10\_20\_smart\_pointers.cpp@{lab\_k29\_13\_10\_20\_smart\_pointers.cpp}}
+\doxysubsubsection{\texorpdfstring{TEST\_CASE()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [10/10]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}Test\+Ref no circular reference\char`\"{}}]{ }\end{DoxyParamCaption})}
+
