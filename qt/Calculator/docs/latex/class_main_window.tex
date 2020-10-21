@@ -1,0 +1,232 @@
+\hypertarget{class_main_window}{}\doxysection{Main\+Window Class Reference}
+\label{class_main_window}\index{MainWindow@{MainWindow}}
+
+
+{\ttfamily \#include $<$mainwindow.\+h$>$}
+
+
+
+Inheritance diagram for Main\+Window\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=160pt]{class_main_window__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Main\+Window\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=160pt]{class_main_window__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{Main\+Window}} (Q\+Widget $\ast$parent=nullptr)
+\item 
+\mbox{\hyperlink{class_main_window_a1f7d2c56410fc1bfa135bb907d43313f}{$\sim$\+Main\+Window}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_main_window_a55ae3e0d4303334ccabae0a5050cfd88}{key\+Press\+Event}} (Q\+Key\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_main_window_a557c9c6aac706124a737652148a802ed}{on\+\_\+btn\+Plus\+\_\+clicked}} ()
+\item 
+void \mbox{\hyperlink{class_main_window_adb18242c721adc5163de18052634c868}{on\+\_\+btn\+Equals\+\_\+clicked}} ()
+\item 
+void \mbox{\hyperlink{class_main_window_ae97ebc41824e922be7a487538f51bfff}{on\+\_\+lsv\+History\+\_\+double\+Clicked}} (const Q\+Model\+Index \&index)
+\item 
+void \mbox{\hyperlink{class_main_window_ac70be1aa2d4d69d7ebb5173be9646e72}{on\+\_\+btn\+Clear\+\_\+clicked}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_main_window_a664a2451447354419b243dfde0af368e}{add\+\_\+number\+\_\+buttons}} ()
+\item 
+void \mbox{\hyperlink{class_main_window_af229688ee12f8778849e0a49bd7fee42}{number\+\_\+clicked}} (int number)
+\item 
+void \mbox{\hyperlink{class_main_window_a16ced7662df99fa1a2dd8b7b9ef76e6b}{operation\+\_\+clicked}} (Q\+String \mbox{\hyperlink{class_main_window_a1dd6b00a323a27180a70dcdc8511f0c2}{operation}})
+\item 
+int \mbox{\hyperlink{class_main_window_afcb2bb38e80bb9a327519d55ec767a81}{calculate}} (Q\+String const \&\mbox{\hyperlink{class_main_window_a1dd6b00a323a27180a70dcdc8511f0c2}{operation}}, int \mbox{\hyperlink{class_main_window_ad1c39756a4873d6814d216c2ca2a0ed8}{operand1}}, int operand2)
+\item 
+void \mbox{\hyperlink{class_main_window_a629d834df924bec2505aec83779da0e4}{add\+\_\+history}} (Q\+String const \&\mbox{\hyperlink{class_main_window_a1dd6b00a323a27180a70dcdc8511f0c2}{operation}}, int \mbox{\hyperlink{class_main_window_ad1c39756a4873d6814d216c2ca2a0ed8}{operand1}}, int operand2, int result)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Ui\+::\+Main\+Window $\ast$ \mbox{\hyperlink{class_main_window_a35466a70ed47252a0191168126a352a5}{ui}}
+\item 
+Q\+Standard\+Item\+Model $\ast$ \mbox{\hyperlink{class_main_window_aa1a1f8ce9c37a7ac70d21402759638b3}{model}}
+\item 
+int \mbox{\hyperlink{class_main_window_ad1c39756a4873d6814d216c2ca2a0ed8}{operand1}}
+\item 
+Q\+String \mbox{\hyperlink{class_main_window_a1dd6b00a323a27180a70dcdc8511f0c2}{operation}} =\char`\"{}\char`\"{}
+\item 
+const int \mbox{\hyperlink{class_main_window_a0cdc08fe647484bb23b708b529bfc273}{M\+A\+X\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+S\+I\+ZE}} = 9
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_main_window_a996c5a2b6f77944776856f08ec30858d}\label{class_main_window_a996c5a2b6f77944776856f08ec30858d}} 
+\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\index{MainWindow@{MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{MainWindow()}{MainWindow()}}
+{\footnotesize\ttfamily Main\+Window\+::\+Main\+Window (\begin{DoxyParamCaption}\item[{Q\+Widget $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a996c5a2b6f77944776856f08ec30858d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_main_window_a1f7d2c56410fc1bfa135bb907d43313f}\label{class_main_window_a1f7d2c56410fc1bfa135bb907d43313f}} 
+\index{MainWindow@{MainWindow}!````~MainWindow@{$\sim$MainWindow}}
+\index{````~MainWindow@{$\sim$MainWindow}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{$\sim$MainWindow()}{~MainWindow()}}
+{\footnotesize\ttfamily Main\+Window\+::$\sim$\+Main\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_main_window_a629d834df924bec2505aec83779da0e4}\label{class_main_window_a629d834df924bec2505aec83779da0e4}} 
+\index{MainWindow@{MainWindow}!add\_history@{add\_history}}
+\index{add\_history@{add\_history}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{add\_history()}{add\_history()}}
+{\footnotesize\ttfamily void Main\+Window\+::add\+\_\+history (\begin{DoxyParamCaption}\item[{Q\+String const \&}]{operation,  }\item[{int}]{operand1,  }\item[{int}]{operand2,  }\item[{int}]{result }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_main_window_a664a2451447354419b243dfde0af368e}\label{class_main_window_a664a2451447354419b243dfde0af368e}} 
+\index{MainWindow@{MainWindow}!add\_number\_buttons@{add\_number\_buttons}}
+\index{add\_number\_buttons@{add\_number\_buttons}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{add\_number\_buttons()}{add\_number\_buttons()}}
+{\footnotesize\ttfamily void Main\+Window\+::add\+\_\+number\+\_\+buttons (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a664a2451447354419b243dfde0af368e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_main_window_afcb2bb38e80bb9a327519d55ec767a81}\label{class_main_window_afcb2bb38e80bb9a327519d55ec767a81}} 
+\index{MainWindow@{MainWindow}!calculate@{calculate}}
+\index{calculate@{calculate}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{calculate()}{calculate()}}
+{\footnotesize\ttfamily int Main\+Window\+::calculate (\begin{DoxyParamCaption}\item[{Q\+String const \&}]{operation,  }\item[{int}]{operand1,  }\item[{int}]{operand2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_main_window_a55ae3e0d4303334ccabae0a5050cfd88}\label{class_main_window_a55ae3e0d4303334ccabae0a5050cfd88}} 
+\index{MainWindow@{MainWindow}!keyPressEvent@{keyPressEvent}}
+\index{keyPressEvent@{keyPressEvent}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{keyPressEvent()}{keyPressEvent()}}
+{\footnotesize\ttfamily void Main\+Window\+::key\+Press\+Event (\begin{DoxyParamCaption}\item[{Q\+Key\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a55ae3e0d4303334ccabae0a5050cfd88_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_main_window_af229688ee12f8778849e0a49bd7fee42}\label{class_main_window_af229688ee12f8778849e0a49bd7fee42}} 
+\index{MainWindow@{MainWindow}!number\_clicked@{number\_clicked}}
+\index{number\_clicked@{number\_clicked}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{number\_clicked()}{number\_clicked()}}
+{\footnotesize\ttfamily void Main\+Window\+::number\+\_\+clicked (\begin{DoxyParamCaption}\item[{int}]{number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_main_window_ac70be1aa2d4d69d7ebb5173be9646e72}\label{class_main_window_ac70be1aa2d4d69d7ebb5173be9646e72}} 
+\index{MainWindow@{MainWindow}!on\_btnClear\_clicked@{on\_btnClear\_clicked}}
+\index{on\_btnClear\_clicked@{on\_btnClear\_clicked}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_btnClear\_clicked}{on\_btnClear\_clicked}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+btn\+Clear\+\_\+clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_main_window_adb18242c721adc5163de18052634c868}\label{class_main_window_adb18242c721adc5163de18052634c868}} 
+\index{MainWindow@{MainWindow}!on\_btnEquals\_clicked@{on\_btnEquals\_clicked}}
+\index{on\_btnEquals\_clicked@{on\_btnEquals\_clicked}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_btnEquals\_clicked}{on\_btnEquals\_clicked}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+btn\+Equals\+\_\+clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_adb18242c721adc5163de18052634c868_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_main_window_a557c9c6aac706124a737652148a802ed}\label{class_main_window_a557c9c6aac706124a737652148a802ed}} 
+\index{MainWindow@{MainWindow}!on\_btnPlus\_clicked@{on\_btnPlus\_clicked}}
+\index{on\_btnPlus\_clicked@{on\_btnPlus\_clicked}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_btnPlus\_clicked}{on\_btnPlus\_clicked}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+btn\+Plus\+\_\+clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_main_window_a557c9c6aac706124a737652148a802ed_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_main_window_ae97ebc41824e922be7a487538f51bfff}\label{class_main_window_ae97ebc41824e922be7a487538f51bfff}} 
+\index{MainWindow@{MainWindow}!on\_lsvHistory\_doubleClicked@{on\_lsvHistory\_doubleClicked}}
+\index{on\_lsvHistory\_doubleClicked@{on\_lsvHistory\_doubleClicked}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{on\_lsvHistory\_doubleClicked}{on\_lsvHistory\_doubleClicked}}
+{\footnotesize\ttfamily void Main\+Window\+::on\+\_\+lsv\+History\+\_\+double\+Clicked (\begin{DoxyParamCaption}\item[{const Q\+Model\+Index \&}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_main_window_a16ced7662df99fa1a2dd8b7b9ef76e6b}\label{class_main_window_a16ced7662df99fa1a2dd8b7b9ef76e6b}} 
+\index{MainWindow@{MainWindow}!operation\_clicked@{operation\_clicked}}
+\index{operation\_clicked@{operation\_clicked}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{operation\_clicked()}{operation\_clicked()}}
+{\footnotesize\ttfamily void Main\+Window\+::operation\+\_\+clicked (\begin{DoxyParamCaption}\item[{Q\+String}]{operation }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_main_window_a0cdc08fe647484bb23b708b529bfc273}\label{class_main_window_a0cdc08fe647484bb23b708b529bfc273}} 
+\index{MainWindow@{MainWindow}!MAX\_HISTORY\_SIZE@{MAX\_HISTORY\_SIZE}}
+\index{MAX\_HISTORY\_SIZE@{MAX\_HISTORY\_SIZE}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{MAX\_HISTORY\_SIZE}{MAX\_HISTORY\_SIZE}}
+{\footnotesize\ttfamily const int Main\+Window\+::\+M\+A\+X\+\_\+\+H\+I\+S\+T\+O\+R\+Y\+\_\+\+S\+I\+ZE = 9\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_main_window_aa1a1f8ce9c37a7ac70d21402759638b3}\label{class_main_window_aa1a1f8ce9c37a7ac70d21402759638b3}} 
+\index{MainWindow@{MainWindow}!model@{model}}
+\index{model@{model}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{model}{model}}
+{\footnotesize\ttfamily Q\+Standard\+Item\+Model$\ast$ Main\+Window\+::model\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_main_window_ad1c39756a4873d6814d216c2ca2a0ed8}\label{class_main_window_ad1c39756a4873d6814d216c2ca2a0ed8}} 
+\index{MainWindow@{MainWindow}!operand1@{operand1}}
+\index{operand1@{operand1}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{operand1}{operand1}}
+{\footnotesize\ttfamily int Main\+Window\+::operand1\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_main_window_a1dd6b00a323a27180a70dcdc8511f0c2}\label{class_main_window_a1dd6b00a323a27180a70dcdc8511f0c2}} 
+\index{MainWindow@{MainWindow}!operation@{operation}}
+\index{operation@{operation}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{operation}{operation}}
+{\footnotesize\ttfamily Q\+String Main\+Window\+::operation =\char`\"{}\char`\"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_main_window_a35466a70ed47252a0191168126a352a5}\label{class_main_window_a35466a70ed47252a0191168126a352a5}} 
+\index{MainWindow@{MainWindow}!ui@{ui}}
+\index{ui@{ui}!MainWindow@{MainWindow}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily Ui\+::\+Main\+Window$\ast$ Main\+Window\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/prj/work/provotar/\+O\+O\+O\+P/2020-\/2021/demo/qt/knu-\/ips-\/ooop-\/2020-\/2021/qt/\+Calculator/\mbox{\hyperlink{mainwindow_8h}{mainwindow.\+h}}\item 
+D\+:/prj/work/provotar/\+O\+O\+O\+P/2020-\/2021/demo/qt/knu-\/ips-\/ooop-\/2020-\/2021/qt/\+Calculator/\mbox{\hyperlink{mainwindow_8cpp}{mainwindow.\+cpp}}\end{DoxyCompactItemize}
