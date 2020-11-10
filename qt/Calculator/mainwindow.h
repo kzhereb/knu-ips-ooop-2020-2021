@@ -15,6 +15,8 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    friend class TestMainWindow;
+
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
