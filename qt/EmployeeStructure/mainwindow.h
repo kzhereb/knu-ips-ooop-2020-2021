@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <QHash>
+#include <QItemSelectionModel>
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +22,7 @@ private slots:
     void on_btnAddBoss_clicked();
 
     void on_btnDelete_clicked();
+    void on_treeEmployees_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
 private:
     Ui::MainWindow *ui;

@@ -3,6 +3,7 @@
 
 #include <QDebug>
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -10,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->treeEmployees->setModel(model);
+
+    ui->btnDelete->setEnabled(false);
+    connect(ui->treeEmployees->selectionModel(),&QItemSelectionModel::selectionChanged,
+            this, &MainWindow::on_treeEmployees_selectionChanged);
 
 }
 
@@ -55,5 +60,15 @@ void MainWindow::on_btnDelete_clicked()
         employees.remove(selectedItem->text());
         model->removeRow(selectedIndex.row(),selectedIndex.parent());
 
+    }
+}
+
+void MainWindow::on_treeEmployees_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    QModelIndexList indexes = ui->treeEmployees->selectionModel()->selectedIndexes();
+    if (indexes.size() > 0) {
+        ui->btnDelete->setEnabled(true);
+    } else {
+        ui->btnDelete->setEnabled(false);
     }
 }
