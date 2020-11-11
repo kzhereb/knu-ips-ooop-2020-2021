@@ -3,6 +3,8 @@
 
 #include <QDebug>
 
+#include <vector>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -48,17 +50,30 @@ void MainWindow::on_btnAddBoss_clicked()
     addBoss("Main Boss");
     addEmployee("Subordinate", "Main Boss");
     addEmployee("Sub2", "Subordinate");
+    addEmployee("Sub3", "Subordinate");
+    addBoss("Another Boss");
+    addEmployee("Developer", "Another Boss");
+    addEmployee("Tester", "Another Boss");
 }
 
 void MainWindow::on_btnDelete_clicked()
 {
     QModelIndexList indexes = ui->treeEmployees->selectionModel()->selectedIndexes();
+
     if (indexes.size() > 0) {
-        QModelIndex selectedIndex = indexes.at(0);
-        QStandardItem* selectedItem = model->itemFromIndex(selectedIndex);
-        //qDebug()<<selectedItem->text();
-        employees.remove(selectedItem->text());
-        model->removeRow(selectedIndex.row(),selectedIndex.parent());
+        std::vector<QStandardItem*> toDelete;
+
+        for (int i=0; i<indexes.size(); i++) {
+            QModelIndex selectedIndex = indexes.at(i);
+            QStandardItem* selectedItem = model->itemFromIndex(selectedIndex);
+            toDelete.push_back(selectedItem);
+        }
+        for (auto selectedItem:toDelete) {
+            QModelIndex selectedIndex = selectedItem->index();
+            qDebug()<<selectedItem->text();
+            employees.remove(selectedItem->text());
+            model->removeRow(selectedIndex.row(),selectedIndex.parent());
+        }
 
     }
 }
