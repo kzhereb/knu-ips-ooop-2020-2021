@@ -29,14 +29,10 @@ void MainWindow::addBoss(QString name)
 
 void MainWindow::addEmployee(QString name, QString supervisorName)
 {
-    int count = model->rowCount();
-    model->setRowCount(count+1);
     QStandardItem * employeeItem = new QStandardItem;
     employeeItem->setText(name);
     QStandardItem * parentItem = employees[supervisorName];
     parentItem->appendRow(employeeItem);
-    //employeeItem->
-
 }
 
 void MainWindow::on_btnAddBoss_clicked()
