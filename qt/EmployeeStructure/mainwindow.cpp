@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-#include <vector>
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -59,23 +59,15 @@ void MainWindow::on_btnAddBoss_clicked()
 void MainWindow::on_btnDelete_clicked()
 {
     QModelIndexList indexes = ui->treeEmployees->selectionModel()->selectedIndexes();
-
-    if (indexes.size() > 0) {
-        std::vector<QStandardItem*> toDelete;
-
-        for (int i=0; i<indexes.size(); i++) {
-            QModelIndex selectedIndex = indexes.at(i);
-            QStandardItem* selectedItem = model->itemFromIndex(selectedIndex);
-            toDelete.push_back(selectedItem);
-        }
-        for (auto selectedItem:toDelete) {
-            QModelIndex selectedIndex = selectedItem->index();
-            qDebug()<<selectedItem->text();
-            employees.remove(selectedItem->text());
-            model->removeRow(selectedIndex.row(),selectedIndex.parent());
-        }
-
+    while(indexes.size() > 0) {
+        QModelIndex selectedIndex = indexes.at(0);
+        QStandardItem* selectedItem = model->itemFromIndex(selectedIndex);
+        //qDebug()<<selectedItem->text();
+        employees.remove(selectedItem->text());
+        model->removeRow(selectedIndex.row(),selectedIndex.parent());
+        indexes = ui->treeEmployees->selectionModel()->selectedIndexes();
     }
+
 }
 
 void MainWindow::on_treeEmployees_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
