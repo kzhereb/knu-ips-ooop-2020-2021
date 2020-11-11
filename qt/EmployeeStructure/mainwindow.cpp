@@ -33,10 +33,12 @@ void MainWindow::addEmployee(QString name, QString supervisorName)
     employeeItem->setText(name);
     QStandardItem * parentItem = employees[supervisorName];
     parentItem->appendRow(employeeItem);
+    employees[name] = employeeItem;
 }
 
 void MainWindow::on_btnAddBoss_clicked()
 {
     addBoss("Main Boss");
     addEmployee("Subordinate", "Main Boss");
+    addEmployee("Sub2", "Subordinate");
 }
