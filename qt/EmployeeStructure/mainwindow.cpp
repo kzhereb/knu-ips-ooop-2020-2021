@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QDebug>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -41,4 +43,17 @@ void MainWindow::on_btnAddBoss_clicked()
     addBoss("Main Boss");
     addEmployee("Subordinate", "Main Boss");
     addEmployee("Sub2", "Subordinate");
+}
+
+void MainWindow::on_btnDelete_clicked()
+{
+    QModelIndexList indexes = ui->treeEmployees->selectionModel()->selectedIndexes();
+    if (indexes.size() > 0) {
+        QModelIndex selectedIndex = indexes.at(0);
+        QStandardItem* selectedItem = model->itemFromIndex(selectedIndex);
+        //qDebug()<<selectedItem->text();
+        employees.remove(selectedItem->text());
+        model->removeRow(selectedIndex.row(),selectedIndex.parent());
+
+    }
 }

@@ -20,6 +20,8 @@ public:
 private slots:
     void on_btnAddBoss_clicked();
 
+    void on_btnDelete_clicked();
+
 private:
     Ui::MainWindow *ui;
     QStandardItemModel * model;
