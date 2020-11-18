@@ -47,6 +47,16 @@ std::size_t total_size_old(std::vector<std::string> types, ...) {
 std::size_t total_size_new() {
 	return 0;
 }
+template< typename ... Types> std::size_t total_size_new(std::string first, Types ... args);
+template<typename T, typename ... Types> std::size_t total_size_new(T first, Types ... args);
+
+
+template< typename ... Types> std::size_t total_size_new(std::string first, Types ... args) {
+
+	std::cout<<first<<", string size ="<<first.size()<<std::endl;
+
+	return first.size() + total_size_new(args...);
+}
 
 template<typename T, typename ... Types> std::size_t total_size_new(T first, Types ... args) {
 
@@ -64,7 +74,7 @@ TEST_CASE("using C-style variadic functions") {
 
 TEST_CASE("using variadic templates") {
 	std::cout<<sizeof("hello")<<std::endl;
-	auto result = total_size_new( 12, 42, '?', "hello", 99.9);
+	auto result = total_size_new( 12, 42, '?', std::string{"hello"}, 99.9);
 	CHECK(result == 22);
 }
 
