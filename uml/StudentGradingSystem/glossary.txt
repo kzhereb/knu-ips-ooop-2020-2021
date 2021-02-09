@@ -8,3 +8,4 @@ Test - a full set of questions, including multiple choice and open questions
 Subject - e.g. mathematics, history, ...
 Chosen subject - subject chosen by a student, also includes difficulty grade
 Difficulty grade - whether chosen subject is main (more complex tasks) or additional (less complex tasks)
+Test location - a place where testing event takes place (usually some university building)
