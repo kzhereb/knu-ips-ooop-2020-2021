@@ -40,27 +40,27 @@ TEST_CASE("[list] - creating list nodes") {
 namespace test_doubly_linked_list {
 	void test_create_append_clear() {
 		DoublyLinkedList<int> list;
-			CHECK(list.begin == nullptr);
-			CHECK(list.end == nullptr);
+			CHECK(list._begin == nullptr);
+			CHECK(list._end == nullptr);
 			CHECK(list.size() == 0);
 
 			SUBCASE("append element") {
 				list.append(123);
-				CHECK(list.end == list.begin);
-				CHECK(list.begin->value == 123);
-				CHECK(list.begin->prev == nullptr);
-				CHECK(list.begin->next == nullptr);
+				CHECK(list._end == list._begin);
+				CHECK(list._begin->value == 123);
+				CHECK(list._begin->prev == nullptr);
+				CHECK(list._begin->next == nullptr);
 				CHECK(list.size() == 1);
 
 				list.append(456);
-				CHECK(list.end != list.begin);
-				CHECK(list.begin->value == 123);
-				CHECK(list.begin->prev == nullptr);
-				CHECK(list.begin->next == list.end);
+				CHECK(list._end != list._begin);
+				CHECK(list._begin->value == 123);
+				CHECK(list._begin->prev == nullptr);
+				CHECK(list._begin->next == list._end);
 
-				CHECK(list.end->value == 456);
-				CHECK(list.end->prev == list.begin);
-				CHECK(list.end->next == nullptr);
+				CHECK(list._end->value == 456);
+				CHECK(list._end->prev == list._begin);
+				CHECK(list._end->next == nullptr);
 
 				CHECK(list.size() == 2);
 

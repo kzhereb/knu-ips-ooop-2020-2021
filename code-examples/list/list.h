@@ -13,6 +13,7 @@
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <iterator>
 
 
 /**
@@ -52,12 +53,12 @@ namespace test_doubly_linked_list {
 template<typename T>
 class DoublyLinkedList {
 private:
-	ListNode<T>* begin;
-	ListNode<T>* end;
+	ListNode<T>* _begin;
+	ListNode<T>* _end;
 	std::size_t _size;
 public:
 
-	DoublyLinkedList(): begin{nullptr}, end{nullptr}, _size{0} {}
+	DoublyLinkedList(): _begin{nullptr}, _end{nullptr}, _size{0} {}
 
 	~DoublyLinkedList() {
 		this->clear();
@@ -74,24 +75,24 @@ public:
 	 */
 	void append(T value) {
 		auto new_node = new ListNode<T>{value};
-		if (begin == nullptr) {
-			begin = end = new_node;
+		if (_begin == nullptr) {
+			_begin = _end = new_node;
 		} else {
-			new_node->prev = end;
-			end->next = new_node;
-			end = new_node;
+			new_node->prev = _end;
+			_end->next = new_node;
+			_end = new_node;
 		}
 		_size++;
 	}
 
 	void clear() {
-		ListNode<T>* current = begin;
+		ListNode<T>* current = _begin;
 		while(current) {
 			ListNode<T>* to_delete = current;
 			current = current->next;
 			delete to_delete;
 		}
-		begin = end = nullptr;
+		_begin = _end = nullptr;
 		_size = 0;
 	}
 
@@ -104,7 +105,7 @@ public:
 	 * \return value of item
 	 */
 	int operator[](std::size_t index) {
-		ListNode<T>* current = begin;
+		ListNode<T>* current = _begin;
 		std::size_t cur_index = 0;
 		while(current) {
 			if (cur_index == index) {
@@ -122,7 +123,7 @@ public:
 
 	std::size_t size_naive() {
 		std::size_t result = 0;
-		ListNode<T>* current = begin;
+		ListNode<T>* current = _begin;
 		while(current) {
 			result++;
 			current = current->next;
@@ -131,7 +132,7 @@ public:
 	}
 
 	friend std::ostream& operator<<(std::ostream& out, const DoublyLinkedList<T>& list) {
-		ListNode<T>* current = list.begin; //can also use auto current; or auto* current;
+		ListNode<T>* current = list._begin; //can also use auto current; or auto* current;
 		out<<"[ ";
 		while(current) {
 			out << current->value << " ";
@@ -140,6 +141,41 @@ public:
 		out<<"]";
 		return out;
 	}
+
+	template<typename U>
+	class Iterator {
+	private:
+		ListNode<U>* current;
+	public:
+		Iterator(ListNode<U>* current) : current{current} {}
+
+		U operator*() {
+			return current->value;
+		}
+		Iterator<U>& operator++() {
+			current = current->next;
+			return *this;
+		}
+		bool operator!=(const Iterator<U>& other) {
+			return this->current != other.current;
+		}
+		typedef std::input_iterator_tag iterator_category;
+		typedef std::ptrdiff_t difference_type;
+		typedef U value_type;
+		typedef U* pointer;
+		typedef U& reference;
+	};
+	typedef Iterator<T> iterator;
+
+	Iterator<T> begin() {
+		return iterator{this->_begin};
+	}
+
+	Iterator<T> end() {
+		return iterator{nullptr};
+	}
+
+
 
 	friend void test_doubly_linked_list::test_create_append_clear();
 };
