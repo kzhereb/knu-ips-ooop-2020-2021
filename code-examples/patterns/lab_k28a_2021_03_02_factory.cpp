@@ -95,6 +95,9 @@ public:
 		return instance;
 	}
 	CreatureFactory(const CreatureFactory&) = delete;
+	CreatureFactory(CreatureFactory&&) = delete;
+	CreatureFactory& operator=(const CreatureFactory&) = delete;
+	CreatureFactory& operator=(CreatureFactory&&) = delete;
 protected:
 	CreatureFactory():creature_count{0} {}
 };
@@ -124,4 +127,6 @@ TEST_CASE("creating creatures by type using Factory and Singleton") {
 	Creature* priest = factory2.create_creature("Priest");
 	CHECK(factory2.get_creature_count() == 2);
 	CHECK(priest->greet() == "Greetings, my name is Priest2, do you need any healing?");
+
+	// CreatureFactory copy = CreatureFactory::get_instance(); // ERROR: copy constructor is deleted
 }
