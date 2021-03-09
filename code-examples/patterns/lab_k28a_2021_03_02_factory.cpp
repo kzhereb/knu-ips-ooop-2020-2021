@@ -81,19 +81,18 @@ TEST_CASE("creating creatures by type") {
 	CHECK(priest->greet() == "Greetings, my name is Priest2, do you need any healing?");
 }
 
+class DummyCreatureFactory;
+
 class CreatureFactory {
 private:
 	int creature_count;
 public:
-	Creature* create_creature(std::string type);
+	virtual Creature* create_creature(std::string type);
 	int get_creature_count() { return this->creature_count; }
 
 //singleton pattern
 public:
-	static CreatureFactory& get_instance() {
-		static CreatureFactory instance;
-		return instance;
-	}
+	static CreatureFactory& get_instance();
 	CreatureFactory(const CreatureFactory&) = delete;
 	CreatureFactory(CreatureFactory&&) = delete;
 	CreatureFactory& operator=(const CreatureFactory&) = delete;
@@ -129,4 +128,27 @@ TEST_CASE("creating creatures by type using Factory and Singleton") {
 	CHECK(priest->greet() == "Greetings, my name is Priest2, do you need any healing?");
 
 	// CreatureFactory copy = CreatureFactory::get_instance(); // ERROR: copy constructor is deleted
+}
+
+class DummyCreature: public Creature {
+private:
+	std::string type;
+public:
+	DummyCreature(std::string type): Creature("dummy",0), type{type} {}
+	std::string greet() override {
+		return "dummy type="+this->type;
+	}
+	void heal(int health_amount, Creature* target) override {
+	}
+};
+
+class DummyCreatureFactory: public CreatureFactory{
+public:
+	Creature* create_creature(std::string type) { return new DummyCreature(type);}
+};
+
+CreatureFactory& CreatureFactory::get_instance() {
+	//static DummyCreatureFactory instance; // to replace the type of singleton instance
+	static CreatureFactory instance;
+	return instance;
 }
