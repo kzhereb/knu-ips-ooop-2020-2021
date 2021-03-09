@@ -81,4 +81,40 @@ TEST_CASE("creating creatures by type") {
 	CHECK(priest->greet() == "Greetings, my name is Priest2, do you need any healing?");
 }
 
+class CreatureFactory {
+private:
+	int creature_count;
+public:
+	Creature* create_creature(std::string type);
 
+//singleton pattern
+public:
+	static CreatureFactory& get_instance() {
+		static CreatureFactory instance;
+		return instance;
+	}
+	CreatureFactory(const CreatureFactory&) = delete;
+protected:
+	CreatureFactory():creature_count{0} {}
+};
+
+Creature* CreatureFactory::create_creature(std::string type) {
+	this->creature_count++;
+	std::string name = type + std::to_string(this->creature_count);
+	if (type == "Warrior") {
+		return new DamageDealer(name, 10, 3);
+	} else if (type == "Fighter") {
+		return new DamageDealer(name, 7, 5);
+	} else if (type == "Priest") {
+		return new Healer(name, 7, 2);
+	} else {
+		throw std::invalid_argument("Unknown type "+type);
+	}
+}
+
+TEST_CASE("creating creatures by type using Factory and Singleton") {
+	Creature* warrior = CreatureFactory::get_instance().create_creature("Warrior");
+	CHECK(warrior->greet() == "I am Warrior1. Prepare to die!!!!");
+	Creature* priest = CreatureFactory::get_instance().create_creature("Priest");
+	CHECK(priest->greet() == "Greetings, my name is Priest2, do you need any healing?");
+}
