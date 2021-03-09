@@ -15,7 +15,10 @@ class Transport {
 protected:
 	int number_of_seats;
 public:
+	Transport() : number_of_seats(0) {}
+	Transport(int number_of_seats) : number_of_seats(number_of_seats) {}
 	virtual std::string get_info_booklet() = 0;
+	int get_number_of_seats() { return number_of_seats;}
 };
 
 
@@ -27,6 +30,7 @@ private:
 	double weight; //in kg
 	double engine_volume; // in liters
 public:
+	Car(): Transport(5), type{Sedan}, weight{1500}, engine_volume {1.5} {}
 	std::string get_info_booklet() override {
 		return "This is a great car";
 	}
@@ -37,6 +41,7 @@ class Airplane : public Transport {
 private:
 	double max_altitude; // in meters
 public:
+	Airplane() : Transport(60), max_altitude{10000} {}
 	std::string get_info_booklet() override {
 		return "Our airplanes never crash!";
 	}
@@ -73,3 +78,59 @@ TEST_CASE("creating transport using factory method") {
 	CHECK(transport->get_info_booklet() == std::string("Our airplanes never crash!"));
 }
 
+class MaintenanceCompany {
+public:
+	virtual int estimate_costs(std::shared_ptr<Transport> transport) = 0;
+};
+
+class CarMaintenanceCompany: public MaintenanceCompany {
+public:
+	int estimate_costs(std::shared_ptr<Transport> transport) {
+		return transport->get_number_of_seats() * 1000;
+	}
+};
+
+class AirplaneMaintenanceCompany: public MaintenanceCompany {
+public:
+	int estimate_costs(std::shared_ptr<Transport> transport) {
+		return transport->get_number_of_seats() * 1e6;
+	}
+};
+
+class TransportFactory {
+public:
+	virtual std::shared_ptr<Transport> create_transport() = 0;
+	virtual std::shared_ptr<MaintenanceCompany> create_maintenance_company() = 0;
+};
+
+class CarFactory: public TransportFactory {
+public:
+	std::shared_ptr<Transport> create_transport() override {
+		return std::make_shared<Car>();
+	}
+	std::shared_ptr<MaintenanceCompany> create_maintenance_company() override {
+		return std::make_shared<CarMaintenanceCompany>();
+	}
+};
+
+class AirplaneFactory: public TransportFactory {
+public:
+	std::shared_ptr<Transport> create_transport() override {
+		return std::make_shared<Airplane>();
+	}
+	std::shared_ptr<MaintenanceCompany> create_maintenance_company() override {
+		return std::make_shared<AirplaneMaintenanceCompany>();
+	}
+};
+
+TEST_CASE("creating parallel hierarchies using Abstract Factory pattern") {
+	std::shared_ptr<TransportFactory> factory = std::make_shared<CarFactory>();
+	auto transport = factory->create_transport();
+	auto company = factory->create_maintenance_company();
+	CHECK(company->estimate_costs(transport) == 5000);
+
+	factory = std::make_shared<AirplaneFactory>();
+	transport = factory->create_transport();
+	company = factory->create_maintenance_company();
+	CHECK(company->estimate_costs(transport) == 6e7);
+}
