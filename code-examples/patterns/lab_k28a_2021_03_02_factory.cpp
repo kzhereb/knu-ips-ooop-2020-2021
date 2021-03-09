@@ -114,11 +114,14 @@ Creature* CreatureFactory::create_creature(std::string type) {
 }
 
 TEST_CASE("creating creatures by type using Factory and Singleton") {
-	CHECK(CreatureFactory::get_instance().get_creature_count() == 0);
-	Creature* warrior = CreatureFactory::get_instance().create_creature("Warrior");
-	CHECK(CreatureFactory::get_instance().get_creature_count() == 1);
+	CreatureFactory& factory = CreatureFactory::get_instance();
+	CHECK(factory.get_creature_count() == 0);
+	Creature* warrior = factory.create_creature("Warrior");
+	CHECK(factory.get_creature_count() == 1);
 	CHECK(warrior->greet() == "I am Warrior1. Prepare to die!!!!");
-	Creature* priest = CreatureFactory::get_instance().create_creature("Priest");
-	CHECK(CreatureFactory::get_instance().get_creature_count() == 2);
+
+	CreatureFactory& factory2 = CreatureFactory::get_instance(); // same instance
+	Creature* priest = factory2.create_creature("Priest");
+	CHECK(factory2.get_creature_count() == 2);
 	CHECK(priest->greet() == "Greetings, my name is Priest2, do you need any healing?");
 }
