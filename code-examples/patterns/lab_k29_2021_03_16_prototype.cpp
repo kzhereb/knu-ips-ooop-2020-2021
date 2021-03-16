@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 class Furniture {
 public:
@@ -105,4 +106,46 @@ TEST_CASE("creating objects with prototypes") {
 
 }
 
+
+class FurnitureRegistry {
+private:
+	std::unordered_map<std::string, std::shared_ptr<Furniture>> prototypes;
+public:
+	void register_type(std::string type, std::shared_ptr<Furniture> prototype) {
+		prototypes[type] = prototype;
+	}
+	std::shared_ptr<Furniture> create_by_type(std::string type) {
+		return prototypes[type]->clone();
+	}
+};
+
+
+TEST_CASE("creating objects with prototype factory") {
+	FurnitureRegistry factory;
+	factory.register_type("working table", std::make_shared<Table>(4, true) );
+	factory.register_type("garden table", std::make_shared<Table>(3, true) );
+	factory.register_type("regular sofa", std::make_shared<Sofa>(4, true) );
+
+
+	auto table1 = factory.create_by_type("working table");
+	CHECK(table1->get_height() == 80);
+	CHECK(table1->get_weight() == 80);
+	CHECK(table1->get_description() == std::string("wood table number 3 with 4 legs"));
+
+	auto table2 = factory.create_by_type("garden table");
+	CHECK(table2->get_height() == 80);
+	CHECK(table2->get_weight() == 75);
+	CHECK(table2->get_description() == std::string("wood table number 4 with 3 legs"));
+
+	auto sofa1 = factory.create_by_type("regular sofa");
+	CHECK(sofa1->get_height() == 160);
+	CHECK(sofa1->get_weight() == 140);
+	CHECK(sofa1->get_description() == std::string("leather sofa number 3 with 4 pillows"));
+
+	auto sofa2 = factory.create_by_type("regular sofa");
+	CHECK(sofa2->get_height() == 160);
+	CHECK(sofa2->get_weight() == 140);
+	CHECK(sofa2->get_description() == std::string("leather sofa number 4 with 4 pillows"));
+
+}
 
