@@ -39,12 +39,25 @@ TEST_CASE("Modifying creatures with builder") {
 	CHECK(unmodified->is_hostile() == false);
 	CHECK(unmodified->get_color() == std::string(""));
 
-	CreatureBuilder builder{unmodified};
-	builder.make_hostile();
-	Creature* priest = builder.get_creature();
+	SUBCASE ("hostile priest") {
+		CreatureBuilder builder{unmodified};
+		builder.make_hostile();
+		Creature* priest = builder.get_creature();
 
-	CHECK(priest->is_hostile() == true);
-	CHECK(priest->get_color() == std::string("red"));
+		CHECK(priest->is_hostile() == true);
+		CHECK(priest->get_color() == std::string("red"));
+	}
+
+	SUBCASE ("hostile green priest") {
+		CreatureBuilder builder{unmodified};
+		builder.make_hostile();
+		builder.recolor("green");
+		Creature* priest = builder.get_creature();
+
+		CHECK(priest->is_hostile() == true);
+		CHECK(priest->get_color() == std::string("green"));
+	}
+
 }
 
 
