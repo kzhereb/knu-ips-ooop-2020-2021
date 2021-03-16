@@ -82,6 +82,11 @@ public:
 		}
 		return result;
 	}
+
+	void add_modifier(Modifier* mod) {
+		modifiers.push_back(mod);
+	}
+
 	virtual ~Creature() {}
 	virtual std::string greet() = 0;
 	virtual void heal(int health_amount, Creature* target) = 0;
