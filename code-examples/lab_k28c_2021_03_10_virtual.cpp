@@ -8,6 +8,7 @@
 #include "doctest.h"
 
 #include <string>
+#include <stdexcept>
 
 class Animal {
 public:
@@ -47,4 +48,20 @@ TEST_CASE("Virtual methods") {
 	delete mypet;
 	CHECK(Animal::destructor_count == 1);
 	CHECK(Cat::cat_count == 1); // will only work if Animal destructor is virtual
+}
+
+Animal* create_animal(std::string type) {
+	if (type == "Cat" || type == "Feline") {
+		return new Cat;
+	} else if (type == "Dog" || type == "Canine") {
+		return new Dog;
+	} else {
+		throw std::invalid_argument("Unknown type: " + type);
+	}
+}
+
+TEST_CASE("using factory function to create animals") {
+	Animal* mypet = create_animal("Dog");
+	CHECK(mypet->make_sound() == std::string("Bow-wow-wow!"));
+
 }
