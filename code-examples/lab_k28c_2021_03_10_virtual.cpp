@@ -63,5 +63,5 @@ Animal* create_animal(std::string type) {
 TEST_CASE("using factory function to create animals") {
 	Animal* mypet = create_animal("Dog");
 	CHECK(mypet->make_sound() == std::string("Bow-wow-wow!"));
-
+	delete mypet;
 }
