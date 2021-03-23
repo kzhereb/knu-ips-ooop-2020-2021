@@ -43,6 +43,9 @@ public:
 	}
 	void heal(int health_amount, Creature* target) override {
 	}
+	Creature* clone(std::string name) override {
+		return new DummyCreature(this->type);
+	}
 };
 
 class DummyCreatureFactory: public CreatureFactory{

@@ -90,6 +90,7 @@ public:
 	virtual ~Creature() {}
 	virtual std::string greet() = 0;
 	virtual void heal(int health_amount, Creature* target) = 0;
+	virtual Creature* clone(std::string name) = 0;
 
 
 };
@@ -113,6 +114,9 @@ public:
 		}
 		change_health_for_target(-damage_to_deal, target);
 	}
+	Creature* clone(std::string name) override {
+		return new DamageDealer(name, this->health, this->damage_per_hit);
+	}
 };
 
 class Healer: public Creature {
@@ -125,6 +129,9 @@ public:
 	}
 	void heal(int health_amount, Creature* target) override {
 		change_health_for_target(health_amount, target);
+	}
+	Creature* clone(std::string name) override {
+		return new Healer(name, this->health, this->heal_per_second);
 	}
 };
 
