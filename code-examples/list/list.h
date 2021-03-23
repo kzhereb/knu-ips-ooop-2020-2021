@@ -44,6 +44,15 @@ namespace test_doubly_linked_list {
 	void test_create_append_clear();
 }
 
+template<typename T>
+struct List {
+	virtual void append(T value) = 0;
+	virtual void clear() = 0;
+	virtual T operator[](std::size_t index) = 0;
+	virtual std::size_t size() = 0;
+
+};
+
 /**
  * \brief Doubly linked list
  *
@@ -51,7 +60,7 @@ namespace test_doubly_linked_list {
  * See [Doubly Linked List](https://en.wikipedia.org/wiki/Doubly_linked_list "Wikipedia article on Doubly Linked List")
  */
 template<typename T>
-class DoublyLinkedList {
+class DoublyLinkedList : public List<T> {
 private:
 	ListNode<T>* _begin;
 	ListNode<T>* _end;
@@ -73,7 +82,7 @@ public:
 	 * \post List size is increased by 1
 	 * \callgraph
 	 */
-	void append(T value) {
+	void append(T value) override {
 		auto new_node = new ListNode<T>{value};
 		if (_begin == nullptr) {
 			_begin = _end = new_node;
@@ -85,7 +94,7 @@ public:
 		_size++;
 	}
 
-	void clear() {
+	void clear() override {
 		ListNode<T>* current = _begin;
 		while(current) {
 			ListNode<T>* to_delete = current;
@@ -104,7 +113,7 @@ public:
 	 * \throw std::out_of_range if index is too large (greater or equals to list size)
 	 * \return value of item
 	 */
-	int operator[](std::size_t index) {
+	T operator[](std::size_t index) override {
 		ListNode<T>* current = _begin;
 		std::size_t cur_index = 0;
 		while(current) {
@@ -117,7 +126,7 @@ public:
 		throw std::out_of_range{"index="+std::to_string(index)+" larger than list size="+std::to_string(_size)};
 	}
 
-	std::size_t size() {
+	std::size_t size() override {
 		return _size;
 	}
 
