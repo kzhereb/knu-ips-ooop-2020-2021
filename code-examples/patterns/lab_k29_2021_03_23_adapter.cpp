@@ -13,24 +13,7 @@
 #include <string>
 #include <vector>
 
-template<typename T>
-class VectorList: public List<T> {
-private:
-	std::vector<T> container;
-public:
-	void append(T value) override {
-		container.push_back(value);
-	}
-	void clear() override {
-		container.clear();
-	}
-	T operator[](std::size_t index) override {
-		return container[index];
-	}
-	std::size_t size() override {
-		return container.size();
-	}
-};
+
 
 template<typename T>
 class VectorListClassAdapter: public List<T>, private std::vector<T> {

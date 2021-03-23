@@ -51,9 +51,9 @@ TEST_CASE("using different abstractions with different implementations: Stack") 
 	SUBCASE("using custom implemented doubly linked list") {
 		mystack->set_implementation(std::make_shared<DoublyLinkedList<std::string>>());
 	}
-//	SUBCASE("using adapted std::vector") {
-//		mylist = std::make_shared<VectorList<std::string>>();
-//	}
+	SUBCASE("using adapted std::vector") {
+		mystack->set_implementation(std::make_shared<VectorList<std::string>>());
+	}
 
 	mystack->push("hello");
 	CHECK(mystack->size() == 1);
