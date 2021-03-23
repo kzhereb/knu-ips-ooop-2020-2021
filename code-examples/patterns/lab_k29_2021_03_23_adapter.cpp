@@ -32,6 +32,26 @@ public:
 	}
 };
 
+template<typename T>
+class VectorListClassAdapter: public List<T>, private std::vector<T> {
+public:
+	void append(T value) override {
+		this->push_back(value);
+	}
+	void clear() override {
+		this->clear();
+	}
+	T operator[] (std::size_t index) {
+		return (*this)[index];
+	}
+	std::size_t size() override {
+		return this->size();
+	}
+//	using std::vector<T>::clear;
+//	using std::vector<T>::size;
+//	using std::vector<T>::operator[];
+
+};
 
 TEST_CASE("using list through interface") {
 	std::shared_ptr<List<std::string>> mylist;
@@ -41,6 +61,9 @@ TEST_CASE("using list through interface") {
 	SUBCASE("using adapted std::vector") {
 		mylist = std::make_shared<VectorList<std::string>>();
 	}
+//	SUBCASE("using class adapter for std::vector") {
+//		mylist = std::make_shared<VectorListClassAdapter<std::string>>();
+//	} // error - crashes, may need to call correct constructor for std::vector
 	mylist->append("hello");
 	mylist->append("world");
 	CHECK(mylist->size() == 2);
