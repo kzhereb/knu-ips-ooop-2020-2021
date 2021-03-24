@@ -65,3 +65,35 @@ TEST_CASE("using factory function to create animals") {
 	CHECK(mypet->make_sound() == std::string("Bow-wow-wow!"));
 	delete mypet;
 }
+
+class AnimalFactory {
+protected:
+	AnimalFactory() {}
+public:
+	static AnimalFactory& get() {
+		static AnimalFactory instance;
+		return instance;
+	}
+	AnimalFactory(const AnimalFactory&) = delete;
+	AnimalFactory(AnimalFactory&&) = delete;
+	AnimalFactory& operator=(const AnimalFactory&) = delete;
+	AnimalFactory& operator=(AnimalFactory&&) = delete;
+
+	Animal* create_animal(std::string type) {
+		if (type == "Cat" || type == "Feline") {
+			return new Cat;
+		} else if (type == "Dog" || type == "Canine") {
+			return new Dog;
+		} else {
+			throw std::invalid_argument("Unknown type: " + type);
+		}
+	}
+
+};
+
+TEST_CASE("using factory class (singleton) to create animals") {
+	//AnimalFactory instance = AnimalFactory::get(); // ERROR - copy constructor deleted
+	Animal* mypet = AnimalFactory::get().create_animal("Dog");
+	CHECK(mypet->make_sound() == std::string("Bow-wow-wow!"));
+	delete mypet;
+}
