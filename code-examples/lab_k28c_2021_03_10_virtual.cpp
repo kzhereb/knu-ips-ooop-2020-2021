@@ -95,5 +95,8 @@ TEST_CASE("using factory class (singleton) to create animals") {
 	//AnimalFactory instance = AnimalFactory::get(); // ERROR - copy constructor deleted
 	Animal* mypet = AnimalFactory::get().create_animal("Dog");
 	CHECK(mypet->make_sound() == std::string("Bow-wow-wow!"));
+	Animal* another = AnimalFactory::get().create_animal("Dog");
+	CHECK(another->make_sound() == std::string("Bow-wow-wow!"));
+	CHECK(mypet != another);
 	delete mypet;
 }
