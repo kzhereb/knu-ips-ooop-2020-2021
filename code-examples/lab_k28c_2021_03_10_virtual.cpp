@@ -92,10 +92,15 @@ public:
 };
 
 TEST_CASE("using factory class (singleton) to create animals") {
-	//AnimalFactory instance = AnimalFactory::get(); // ERROR - copy constructor deleted
-	Animal* mypet = AnimalFactory::get().create_animal("Dog");
+	// MAGIC factory;
+	// AnimalFactory factory; // ERROR - constructor is protected
+	// AnimalFactory factory = AnimalFactory::get(); // ERROR - copy constructor deleted
+	// AnimalFactory* factory_ptr = &(AnimalFactory::get()); // works, but dangerous - what if someone calls delete?
+	AnimalFactory& factory = AnimalFactory::get();
+
+	Animal* mypet = factory.create_animal("Dog");
 	CHECK(mypet->make_sound() == std::string("Bow-wow-wow!"));
-	Animal* another = AnimalFactory::get().create_animal("Dog");
+	Animal* another = factory.create_animal("Dog");
 	CHECK(another->make_sound() == std::string("Bow-wow-wow!"));
 	CHECK(mypet != another);
 	delete mypet;
