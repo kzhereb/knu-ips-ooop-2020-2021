@@ -17,7 +17,7 @@ class PropMapCreature {
 private:
 	std::unordered_map<std::string, std::any> properties;
 public:
-	template<typename T>
+	template<typename T = int>
 	T get_value(std::string property) {
 		return std::any_cast<T>(properties[property]);
 	}

@@ -21,6 +21,7 @@ TEST_CASE("using propmap creatures") {
 
 	CHECK(warrior.get_value<std::string>("name") == "Warrior1");
 	CHECK(warrior.get_value<int>("health") == 10);
+	CHECK(warrior.get_value("damage_per_hit") == 3);
 }
 
 
