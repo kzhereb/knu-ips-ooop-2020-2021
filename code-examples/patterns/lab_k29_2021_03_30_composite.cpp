@@ -141,26 +141,50 @@ TEST_CASE("using decorator to log API calls") {
 					"Size for root is 56123\n"));
 }
 
-std::shared_ptr<FileSystemItem> create_file(std::string name, int size) {
-	std::shared_ptr<FileSystemItem> file_real = std::make_shared<File>(name, size);
-	return std::make_shared<LoggingFileSystemItem>(file_real);
-}
+class FileSystemItemFactory {
+public:
+	virtual std::shared_ptr<FileSystemItem> create_file(std::string name, int size) {
+		return std::make_shared<File>(name, size);
+	}
 
-std::shared_ptr<FileSystemItem> create_directory(std::string name) {
-	std::shared_ptr<FileSystemItem> dir_real = std::make_shared<Directory>(name);
-	return std::make_shared<LoggingFileSystemItem>(dir_real);
-}
+	virtual std::shared_ptr<FileSystemItem> create_directory(std::string name) {
+		return std::make_shared<Directory>(name);
+	}
+
+};
+
+class LoggingFileSystemItemFactory: public FileSystemItemFactory {
+private:
+	std::ostream& log_stream;
+public:
+	LoggingFileSystemItemFactory(std::ostream& log_stream): log_stream{log_stream} {}
+
+	std::shared_ptr<FileSystemItem> create_file(std::string name, int size) override {
+		std::shared_ptr<FileSystemItem> file_real = FileSystemItemFactory::create_file(name, size);
+		return std::make_shared<LoggingFileSystemItem>(file_real, log_stream);
+	}
+
+	std::shared_ptr<FileSystemItem> create_directory(std::string name) override {
+		std::shared_ptr<FileSystemItem> dir_real = FileSystemItemFactory::create_directory(name);
+		return std::make_shared<LoggingFileSystemItem>(dir_real, log_stream);
+	}
+};
+
+
+
+
 
 TEST_CASE("using decorator to log API calls") {
 	std::stringstream log;
+	LoggingFileSystemItemFactory factory{log};
 
-	auto root_dir = create_directory("root");
+	auto root_dir = factory.create_directory("root");
 
-	root_dir->add_child(create_file("config.json", 1000));
-	root_dir->add_child(create_file("data.bin", 55000));
+	root_dir->add_child(factory.create_file("config.json", 1000));
+	root_dir->add_child(factory.create_file("data.bin", 55000));
 
-	auto child_dir = create_directory("child");
-	child_dir->add_child(create_file("readme.txt", 123));
+	auto child_dir = factory.create_directory("child");
+	child_dir->add_child(factory.create_file("readme.txt", 123));
 	root_dir->add_child(child_dir);
 
 
@@ -169,13 +193,27 @@ TEST_CASE("using decorator to log API calls") {
 	CHECK(root_dir->size() == 56123);
 
 	CHECK(log.str()==std::string(
-					"Trying to add child config.json to item root with children_count = 0\n"
-					"Child added successfully, new children_count = 1\n"
-					"Trying to add child data.bin to item root with children_count = 1\n"
-					"Child added successfully, new children_count = 2\n"
-					"Trying to add child child to item root with children_count = 2\n"
-					"Child added successfully, new children_count = 3\n"
-					"Getting size for root\n"
-					"Size for root is 56123\n"));
+			"Trying to add child config.json to item root with children_count = 0\n"
+			"Child added successfully, new children_count = 1\n"
+			"Trying to add child data.bin to item root with children_count = 1\n"
+			"Child added successfully, new children_count = 2\n"
+			"Trying to add child readme.txt to item child with children_count = 0\n"
+			"Child added successfully, new children_count = 1\n"
+			"Trying to add child child to item root with children_count = 2\n"
+			"Child added successfully, new children_count = 3\n"
+			"Getting size for child\n"
+			"Getting size for readme.txt\n"
+			"Size for readme.txt is 123\n"
+			"Size for child is 123\n"
+			"Getting size for root\n"
+			"Getting size for config.json\n"
+			"Size for config.json is 1000\n"
+			"Getting size for data.bin\n"
+			"Size for data.bin is 55000\n"
+			"Getting size for child\n"
+			"Getting size for readme.txt\n"
+			"Size for readme.txt is 123\n"
+			"Size for child is 123\n"
+			"Size for root is 56123\n"));
 }
 
