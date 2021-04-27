@@ -9,6 +9,7 @@
 #include <vector>
 #include <functional>
 #include <thread>
+#include <mutex>
 #include <iostream>
 
 std::vector<int> custom_transform_sequential(const std::vector<int>& input, std::function<int(int)> func) {
@@ -78,6 +79,23 @@ public:
 	long long get_value() { return sum; }
 };
 
+struct SumFunctorThreadSafe {
+private:
+	long long sum;
+	std::mutex mutex;
+public:
+	SumFunctorThreadSafe():sum(0) {};
+
+	int operator()(int value) {
+		{
+			std::lock_guard<std::mutex> lock(mutex);
+			sum+=value;
+		}
+		return value;
+	}
+	long long get_value() { return sum; }
+};
+
 
 TEST_CASE("using transform instead of accumulate/reduce - just for demo, don't use in real code") {
 	std::vector<int> mylist {1, 2, 3, 4, 5};
@@ -97,5 +115,27 @@ TEST_CASE("using transform instead of accumulate/reduce - just for demo, don't u
 	long long sum = accumulate_sum.get_value();
 	CHECK(sum == 15);
 
+}
+
+
+TEST_CASE("using big vector") {
+	std::size_t size = 1e6;
+	std::vector<int> mylist(size, 1);
+
+	//std::function<int(int)> accumulate_sum = [](int value) { sum+=value; return value; };
+
+	//SumFunctor accumulate_sum; //ERROR - won't work because of race condition
+	SumFunctorThreadSafe accumulate_sum;
+
+	std::vector<int> result;
+	SUBCASE("sequential") {
+		result = custom_transform_sequential(mylist, std::ref(accumulate_sum));
+	}
+	SUBCASE("parallel") {
+		result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
+	}
+	CHECK(result == mylist);
+	long long sum = accumulate_sum.get_value();
+	CHECK(sum == size);
 
 }
