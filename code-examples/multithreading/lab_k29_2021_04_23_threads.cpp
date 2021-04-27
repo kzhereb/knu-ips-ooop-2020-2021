@@ -49,7 +49,7 @@ std::vector<int> custom_transform_parallel(const std::vector<int>& input, std::f
 }
 
 
-TEST_CASE("custom tranform - sequential and parallel") {
+TEST_CASE("custom transform - sequential and parallel") {
 	std::vector<int> mylist {1, 2, 3, 4, 5};
 
 	std::function<int(int)> square = [](int value) { return value*value; };
