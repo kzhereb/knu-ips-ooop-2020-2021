@@ -11,6 +11,26 @@
 #include <thread>
 #include <mutex>
 #include <iostream>
+#include <chrono>
+
+
+class Timer {
+private:
+	std::string name;
+	std::chrono::time_point<std::chrono::high_resolution_clock> start;
+public:
+	Timer(std::string name) {
+		this->name = name;
+		this->start = std::chrono::high_resolution_clock::now();
+	}
+	~Timer() {
+		auto end = std::chrono::high_resolution_clock::now();
+		std::cout << "Timer " << name << ": "
+				<< std::chrono::duration_cast<std::chrono::milliseconds>(
+						end - start).count() << "ms" << std::endl;
+	}
+};
+
 
 std::vector<int> custom_transform_sequential(const std::vector<int>& input, std::function<int(int)> func) {
 	std::size_t size = input.size();
@@ -64,6 +84,25 @@ TEST_CASE("custom transform - sequential and parallel") {
 	}
 
 	CHECK(result == std::vector<int>{1, 4, 9, 16, 25});
+}
+
+TEST_CASE("custom transform - measure time") {
+	std::size_t size = 1e6;
+	std::vector<int> mylist(size, 1);
+
+	std::function<int(int)> square = [](int value) { return value*value; };
+
+	std::vector<int> result;
+	SUBCASE("sequential") {
+		Timer timer{"sequential-square"};
+		result = custom_transform_sequential(mylist, square);
+	}
+	SUBCASE("parallel") {
+		Timer timer{"parallel-square"};
+		result = custom_transform_parallel(mylist, square);
+	}
+
+	CHECK(result == mylist);
 }
 
 struct SumFunctor {
@@ -131,9 +170,11 @@ TEST_CASE("using big vector") {
 
 	std::vector<int> result;
 	SUBCASE("sequential") {
+		Timer time{"sequential-accumulate"};
 		result = custom_transform_sequential(mylist, std::ref(accumulate_sum));
 	}
 	SUBCASE("parallel") {
+		Timer time{"parallel-accumulate"};
 		result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
 	}
 	CHECK(result == mylist);
