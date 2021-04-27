@@ -65,3 +65,37 @@ TEST_CASE("custom transform - sequential and parallel") {
 	CHECK(result == std::vector<int>{1, 4, 9, 16, 25});
 }
 
+struct SumFunctor {
+private:
+	long long sum;
+public:
+	SumFunctor():sum(0) {};
+
+	int operator()(int value) {
+		sum+=value;
+		return value;
+	}
+	long long get_value() { return sum; }
+};
+
+
+TEST_CASE("using transform instead of accumulate/reduce - just for demo, don't use in real code") {
+	std::vector<int> mylist {1, 2, 3, 4, 5};
+
+	//std::function<int(int)> accumulate_sum = [](int value) { sum+=value; return value; };
+
+	SumFunctor accumulate_sum;
+
+	std::vector<int> result;
+	SUBCASE("sequential") {
+		result = custom_transform_sequential(mylist, std::ref(accumulate_sum));
+	}
+	SUBCASE("parallel") {
+		result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
+	}
+	CHECK(result == std::vector<int>{1, 2, 3, 4, 5});
+	long long sum = accumulate_sum.get_value();
+	CHECK(sum == 15);
+
+
+}
