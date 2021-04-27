@@ -89,7 +89,9 @@ public:
 	int operator()(int value) {
 		{
 			std::lock_guard<std::mutex> lock(mutex);
+			//mutex.lock(); //done automatically by lock_guard constructor
 			sum+=value;
+			//mutex.unlock(); //done automatically by lock_guard destructor that is triggered by going out of scope
 		}
 		return value;
 	}
