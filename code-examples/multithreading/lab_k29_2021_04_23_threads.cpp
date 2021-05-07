@@ -108,6 +108,39 @@ long long custom_accumulate_parallel_manylocks(const std::vector<int>& input, st
 }
 
 
+long long custom_accumulate_parallel_fewlocks(const std::vector<int>& input, std::function<long long(long long, int)> func, long long init_value = 0) {
+	std::size_t size = input.size();
+	long long result = init_value;
+
+	std::size_t num_threads = std::thread::hardware_concurrency();
+	std::vector<std::thread> threads(num_threads);
+	std::size_t thread_size = (size / num_threads)+1;
+	std::size_t start = 0;
+	std::mutex mutex;
+	for (std::size_t i=0; i<num_threads; i++) {
+		threads[i] = std::thread(
+				[=, &input, &result, &mutex] () {
+						long long local_result = (i==0) ? result : 0; //TODO: use first value from vector
+						for(std::size_t j = start; j < std::min(start+thread_size, size); j++) {
+							local_result = func(local_result, input[j]);
+						}
+						{
+							std::lock_guard<std::mutex> lock(mutex);
+							result = func(result, local_result);
+						}
+					}
+				);
+		start+= thread_size;
+	}
+	for (std::size_t i=0; i<num_threads; i++) {
+		threads[i].join();
+	}
+
+	return result;
+
+}
+
+
 TEST_CASE("custom transform - sequential and parallel") {
 	std::vector<int> mylist {1, 2, 3, 4, 5};
 
@@ -203,8 +236,11 @@ TEST_CASE("using transform instead of accumulate/reduce - just for demo, don't u
 		SUBCASE("sequential") {
 			sum = custom_accumulate_sequential(mylist, plus);
 		}
-		SUBCASE("parallel") {
+		SUBCASE("parallel-manylocks") {
 			sum = custom_accumulate_parallel_manylocks(mylist, plus);
+		}
+		SUBCASE("parallel-fewlocks") {
+			sum = custom_accumulate_parallel_fewlocks(mylist, plus);
 		}
 	}
 	CHECK(sum == 15);
@@ -246,9 +282,13 @@ TEST_CASE("using big vector") {
 			Timer time{"sequential-accumulate"};
 			sum = custom_accumulate_sequential(mylist, plus);
 		}
-		SUBCASE("parallel") {
-			Timer time{"parallel-accumulate"};
+		SUBCASE("parallel-manylocks") {
+			Timer time{"parallel-accumulate-manylocks"};
 			sum = custom_accumulate_parallel_manylocks(mylist, plus);
+		}
+		SUBCASE("parallel-fewlocks") {
+			Timer time{"parallel-accumulate-fewlocks"};
+			sum = custom_accumulate_parallel_fewlocks(mylist, plus);
 		}
 	}
 	CHECK(sum == size);
