@@ -212,17 +212,11 @@ public:
 struct SumFunctorAtomic {
 private:
 	std::atomic<long long> sum;
-	//std::mutex mutex;
 public:
 	SumFunctorAtomic():sum(0) {};
 
 	int operator()(int value) {
-		{
-			//std::lock_guard<std::mutex> lock(mutex);
-			//mutex.lock(); //done automatically by lock_guard constructor
-			sum+=value;
-			//mutex.unlock(); //done automatically by lock_guard destructor that is triggered by going out of scope
-		}
+		sum+=value;
 		return value;
 	}
 	long long get_value() { return sum; }
