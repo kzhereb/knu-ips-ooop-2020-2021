@@ -10,6 +10,7 @@
 #include <functional>
 #include <thread>
 #include <mutex>
+#include <atomic>
 #include <iostream>
 #include <chrono>
 
@@ -208,6 +209,29 @@ public:
 	long long get_value() { return sum; }
 };
 
+struct SumFunctorAtomic {
+private:
+	std::atomic<long long> sum;
+	//std::mutex mutex;
+public:
+	SumFunctorAtomic():sum(0) {};
+
+	int operator()(int value) {
+		{
+			//std::lock_guard<std::mutex> lock(mutex);
+			//mutex.lock(); //done automatically by lock_guard constructor
+			sum+=value;
+			//mutex.unlock(); //done automatically by lock_guard destructor that is triggered by going out of scope
+		}
+		return value;
+	}
+	long long get_value() { return sum; }
+
+	bool is_lock_free() {
+		return sum.is_lock_free();
+	}
+};
+
 
 TEST_CASE("using transform instead of accumulate/reduce - just for demo, don't use in real code") {
 	std::vector<int> mylist {1, 2, 3, 4, 5};
@@ -262,15 +286,26 @@ TEST_CASE("using big vector") {
 
 		std::vector<int> result;
 		SUBCASE("sequential") {
+			SumFunctor accumulate_sum;
 			Timer time{"sequential-transform-accumulate"};
 			result = custom_transform_sequential(mylist, std::ref(accumulate_sum));
+			sum = accumulate_sum.get_value();
 		}
 		SUBCASE("parallel") {
+			SumFunctorThreadSafe accumulate_sum;
 			Timer time{"parallel-transform-accumulate"};
 			result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
+			sum = accumulate_sum.get_value();
+		}
+		SUBCASE("atomic") {
+			SumFunctorAtomic accumulate_sum;
+			CHECK(accumulate_sum.is_lock_free());
+			Timer time{"atomic-transform-accumulate"};
+			result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
+			sum = accumulate_sum.get_value();
 		}
 		CHECK(result == mylist);
-		sum = accumulate_sum.get_value();
+
 	}
 	SUBCASE("accumulate") {
 
