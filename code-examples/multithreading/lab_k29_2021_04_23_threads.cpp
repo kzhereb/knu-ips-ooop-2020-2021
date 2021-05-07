@@ -216,22 +216,41 @@ TEST_CASE("using big vector") {
 	std::size_t size = 1e6;
 	std::vector<int> mylist(size, 1);
 
+	long long sum;
+
 	//std::function<int(int)> accumulate_sum = [](int value) { sum+=value; return value; };
 
-	//SumFunctor accumulate_sum; //ERROR - won't work because of race condition
-	SumFunctorThreadSafe accumulate_sum;
+	SUBCASE("functor with transform") {
+		//SumFunctor accumulate_sum; //ERROR - won't work because of race condition
+		SumFunctorThreadSafe accumulate_sum;
 
-	std::vector<int> result;
-	SUBCASE("sequential") {
-		Timer time{"sequential-accumulate"};
-		result = custom_transform_sequential(mylist, std::ref(accumulate_sum));
+		std::vector<int> result;
+		SUBCASE("sequential") {
+			Timer time{"sequential-transform-accumulate"};
+			result = custom_transform_sequential(mylist, std::ref(accumulate_sum));
+		}
+		SUBCASE("parallel") {
+			Timer time{"parallel-transform-accumulate"};
+			result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
+		}
+		CHECK(result == mylist);
+		sum = accumulate_sum.get_value();
 	}
-	SUBCASE("parallel") {
-		Timer time{"parallel-accumulate"};
-		result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
+	SUBCASE("accumulate") {
+
+		std::function<long long(long long, int)> plus = [](
+				long long prev_result, int value) {
+			return prev_result + value;
+		};
+		SUBCASE("sequential") {
+			Timer time{"sequential-accumulate"};
+			sum = custom_accumulate_sequential(mylist, plus);
+		}
+		SUBCASE("parallel") {
+			Timer time{"parallel-accumulate"};
+			sum = custom_accumulate_parallel_manylocks(mylist, plus);
+		}
 	}
-	CHECK(result == mylist);
-	long long sum = accumulate_sum.get_value();
 	CHECK(sum == size);
 
 }
