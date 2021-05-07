@@ -69,6 +69,15 @@ std::vector<int> custom_transform_parallel(const std::vector<int>& input, std::f
 	return result;
 }
 
+long long custom_accumulate_sequential(const std::vector<int>& input, std::function<long long(long long, int)> func, long long init_value = 0) {
+	std::size_t size = input.size();
+	long long result = init_value;
+	for(std::size_t i = 0; i<size; i++) {
+		result = func(result, input[i]);
+	}
+	return result;
+}
+
 
 TEST_CASE("custom transform - sequential and parallel") {
 	std::vector<int> mylist {1, 2, 3, 4, 5};
@@ -144,16 +153,25 @@ TEST_CASE("using transform instead of accumulate/reduce - just for demo, don't u
 	//std::function<int(int)> accumulate_sum = [](int value) { sum+=value; return value; };
 
 	SumFunctor accumulate_sum;
-
-	std::vector<int> result;
-	SUBCASE("sequential") {
-		result = custom_transform_sequential(mylist, std::ref(accumulate_sum));
+	long long sum;
+	SUBCASE("functor with transform") {
+		std::vector<int> result;
+		SUBCASE("sequential") {
+			result = custom_transform_sequential(mylist, std::ref(accumulate_sum));
+		}
+		SUBCASE("parallel") {
+			result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
+		}
+		CHECK(result == std::vector<int>{1, 2, 3, 4, 5});
+		sum = accumulate_sum.get_value();
 	}
-	SUBCASE("parallel") {
-		result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
+	SUBCASE("accumulate") {
+		std::function<long long(long long, int)> plus = [](
+				long long prev_result, int value) {
+			return prev_result + value;
+		};
+		sum = custom_accumulate_sequential(mylist, plus);
 	}
-	CHECK(result == std::vector<int>{1, 2, 3, 4, 5});
-	long long sum = accumulate_sum.get_value();
 	CHECK(sum == 15);
 
 }
