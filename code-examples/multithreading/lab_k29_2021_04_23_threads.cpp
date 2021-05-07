@@ -78,6 +78,35 @@ long long custom_accumulate_sequential(const std::vector<int>& input, std::funct
 	return result;
 }
 
+long long custom_accumulate_parallel_manylocks(const std::vector<int>& input, std::function<long long(long long, int)> func, long long init_value = 0) {
+	std::size_t size = input.size();
+	long long result = init_value;
+
+	std::size_t num_threads = std::thread::hardware_concurrency();
+	std::vector<std::thread> threads(num_threads);
+	std::size_t thread_size = (size / num_threads)+1;
+	std::size_t start = 0;
+	std::mutex mutex;
+	for (std::size_t i=0; i<num_threads; i++) {
+		threads[i] = std::thread(
+				[=, &input, &result, &mutex] () {
+						//std::cout<<"worker thread "<<i<<" starts at "<<start<<std::endl;
+						for(std::size_t j = start; j < std::min(start+thread_size, size); j++) {
+							std::lock_guard<std::mutex> lock(mutex);
+							result = func(result, input[j]);
+						}
+					}
+				);
+		start+= thread_size;
+	}
+	for (std::size_t i=0; i<num_threads; i++) {
+		threads[i].join();
+	}
+
+	return result;
+
+}
+
 
 TEST_CASE("custom transform - sequential and parallel") {
 	std::vector<int> mylist {1, 2, 3, 4, 5};
@@ -166,11 +195,17 @@ TEST_CASE("using transform instead of accumulate/reduce - just for demo, don't u
 		sum = accumulate_sum.get_value();
 	}
 	SUBCASE("accumulate") {
+
 		std::function<long long(long long, int)> plus = [](
 				long long prev_result, int value) {
 			return prev_result + value;
 		};
-		sum = custom_accumulate_sequential(mylist, plus);
+		SUBCASE("sequential") {
+			sum = custom_accumulate_sequential(mylist, plus);
+		}
+		SUBCASE("parallel") {
+			sum = custom_accumulate_parallel_manylocks(mylist, plus);
+		}
 	}
 	CHECK(sum == 15);
 
