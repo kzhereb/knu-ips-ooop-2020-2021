@@ -8,6 +8,7 @@
 #include "../doctest.h"
 #include <vector>
 #include <functional>
+#include <unordered_map>
 #include <thread>
 #include <mutex>
 #include <atomic>
@@ -226,6 +227,26 @@ public:
 	}
 };
 
+struct SumFunctorThreadIdMap {
+private:
+	std::unordered_map<std::thread::id, long long> thread_sums;
+	//long long sum;
+public:
+	SumFunctorThreadIdMap(): thread_sums(std::thread::hardware_concurrency()) {};
+
+	int operator()(int value) {
+		this->thread_sums[std::this_thread::get_id()] +=value;
+		return value;
+	}
+	long long get_value() {
+		long long sum = 0;
+		for(const auto & [key, value]: this->thread_sums ) {
+			sum += value;
+		}
+		return sum;
+	}
+};
+
 
 TEST_CASE("using transform instead of accumulate/reduce - just for demo, don't use in real code") {
 	std::vector<int> mylist {1, 2, 3, 4, 5};
@@ -295,6 +316,12 @@ TEST_CASE("using big vector") {
 			SumFunctorAtomic accumulate_sum;
 			CHECK(accumulate_sum.is_lock_free());
 			Timer time{"atomic-transform-accumulate"};
+			result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
+			sum = accumulate_sum.get_value();
+		}
+		SUBCASE("thread id map") {
+			SumFunctorThreadIdMap accumulate_sum;
+			Timer time{"thread-id-map-transform-accumulate"};
 			result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
 			sum = accumulate_sum.get_value();
 		}
