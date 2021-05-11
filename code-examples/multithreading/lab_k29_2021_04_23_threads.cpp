@@ -246,6 +246,51 @@ public:
 		return sum;
 	}
 };
+class ThreadLocalAccumulator {
+private:
+	long long local_sum;
+	long long* shared_result;
+	std::mutex* mutex;
+public:
+	ThreadLocalAccumulator() : local_sum(0), shared_result(nullptr), mutex(nullptr) {
+		std::cout<<"accumulator created with thread-id="<<std::this_thread::get_id()<<std::endl;
+	}
+	~ThreadLocalAccumulator() {
+		std::cout<<"accumulator destructor with thread-id="<<std::this_thread::get_id()<<std::endl;
+		std::lock_guard<std::mutex> lock(*mutex);
+		*shared_result += local_sum;
+		std::cout<<"local sum ="<<local_sum<<", shared result ="<<(*shared_result)<<std::endl;
+	}
+	void init(long long* shared_result, std::mutex* mutex) {
+		if (! this->mutex) {
+			this->shared_result = shared_result;
+			this->mutex = mutex;
+			std::cout<<"init for thread-id="<<std::this_thread::get_id()<<std::endl;
+		}
+	}
+	void increment(int value) {
+		local_sum += value;
+	}
+};
+
+
+struct SumFunctorThreadLocal {
+private:
+	long long sum;
+	std::mutex mutex;
+	static thread_local ThreadLocalAccumulator accumulator;
+public:
+	SumFunctorThreadLocal():sum(0) {};
+
+	int operator()(int value) {
+		accumulator.init(&sum, &mutex);
+		accumulator.increment(value);
+		return value;
+	}
+	long long get_value() { return sum; }
+};
+
+thread_local ThreadLocalAccumulator SumFunctorThreadLocal::accumulator;
 
 
 TEST_CASE("using transform instead of accumulate/reduce - just for demo, don't use in real code") {
@@ -325,6 +370,12 @@ TEST_CASE("using big vector") {
 			result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
 			sum = accumulate_sum.get_value();
 		}
+//		SUBCASE("thread_local") {
+//			SumFunctorThreadLocal accumulate_sum;
+//			Timer time{"thread_local-transform-accumulate"};
+//			result = custom_transform_parallel(mylist, std::ref(accumulate_sum));
+//			sum = accumulate_sum.get_value();
+//		}
 		CHECK(result == mylist);
 
 	}
