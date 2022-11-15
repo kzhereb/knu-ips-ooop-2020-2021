@@ -1,0 +1,11 @@
+Key entities for Student Grading System project
+
+Teacher - responsible for checking open questions
+Supervisor - present in classroom where the test takes place, checks for plagiarism/cheating/...,
+Multiple choice questions - test questions with a list of answers, students have to choose correct answers from this list
+Open questions - test questions without predefined answers, students have to write their own answer with explanations 
+Test - a full set of questions, including multiple choice and open questions
+Subject - e.g. mathematics, history, ...
+Chosen subject - subject chosen by a student, also includes difficulty grade
+Difficulty grade - whether chosen subject is main (more complex tasks) or additional (less complex tasks)
+Test location - a place where testing event takes place (usually some university building)
