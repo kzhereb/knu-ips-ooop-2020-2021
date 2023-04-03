@@ -14,6 +14,8 @@
 #include <stdexcept>
 #include <ostream>
 #include <sstream>
+#include <iostream>
+#include <chrono>
 
 
 class FileSystemItem {
@@ -112,6 +114,60 @@ public:
 		}
 
 };
+
+
+class TimeMeasureFileSystemItem: public FileSystemItem {
+private:
+  std::shared_ptr<FileSystemItem> decorated_item;
+public:
+  TimeMeasureFileSystemItem(std::shared_ptr<FileSystemItem> decorated_item) :
+    FileSystemItem{decorated_item->name()}, decorated_item{decorated_item} {}
+
+  int size() override {
+    std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
+
+    int result = decorated_item->size();
+
+    std::chrono::time_point<std::chrono::high_resolution_clock> end = std::chrono::high_resolution_clock::now();
+    std::cout << "Time for item " << decorated_item->name() << ", operation size(): "
+            << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()
+            << "ns" << std::endl;
+    return result;
+  }
+
+  void add_child(std::shared_ptr<FileSystemItem> child) override {
+    decorated_item->add_child(child);
+  }
+
+};
+
+TEST_CASE("using decorator to measure API calls time") {
+  std::stringstream log;
+  auto root_dir_real = std::make_shared<Directory>("root");
+  auto root_dir = std::make_shared<TimeMeasureFileSystemItem>(root_dir_real);
+
+  root_dir->add_child(std::make_shared<File>("config.json", 1000));
+  root_dir->add_child(std::make_shared<File>("data.bin", 55000));
+
+  auto child_dir = std::make_shared<Directory>("child");
+  child_dir->add_child(std::make_shared<File>("readme.txt", 123));
+  root_dir->add_child(child_dir);
+
+
+
+  CHECK(child_dir->size() == 123);
+  CHECK(root_dir->size() == 56123);
+
+//  CHECK(log.str()==std::string(
+//          "Trying to add child config.json to item root with children_count = 0\n"
+//          "Child added successfully, new children_count = 1\n"
+//          "Trying to add child data.bin to item root with children_count = 1\n"
+//          "Child added successfully, new children_count = 2\n"
+//          "Trying to add child child to item root with children_count = 2\n"
+//          "Child added successfully, new children_count = 3\n"
+//          "Getting size for root\n"
+//          "Size for root is 56123\n"));
+}
 
 TEST_CASE("using decorator to log API calls") {
 	std::stringstream log;
@@ -216,4 +272,8 @@ TEST_CASE("using decorator to log API calls") {
 			"Size for child is 123\n"
 			"Size for root is 56123\n"));
 }
+
+//TEST_CASE("test old code") {
+//std::cout<<"hello legacy code"<<std::endl;
+//}
 
