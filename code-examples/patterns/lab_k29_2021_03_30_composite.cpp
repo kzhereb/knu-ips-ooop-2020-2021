@@ -168,7 +168,8 @@ TEST_CASE("using decorator to measure API calls time") {
   std::stringstream log;
   auto root_dir_real = std::make_shared<Directory>("root");
   auto root_dir_delay = std::make_shared<DelayFileSystemItem>(root_dir_real, 20);
-  auto root_dir = std::make_shared<TimeMeasureFileSystemItem>(root_dir_delay);
+  auto root_dir_delay2 = std::make_shared<DelayFileSystemItem>(root_dir_delay, 100);
+  auto root_dir = std::make_shared<TimeMeasureFileSystemItem>(root_dir_delay2);
 
   root_dir->add_child(std::make_shared<File>("config.json", 1000));
   root_dir->add_child(std::make_shared<File>("data.bin", 55000));
