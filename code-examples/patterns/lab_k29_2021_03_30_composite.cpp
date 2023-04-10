@@ -16,6 +16,7 @@
 #include <sstream>
 #include <iostream>
 #include <chrono>
+#include <thread>
 
 
 class FileSystemItem {
@@ -130,21 +131,44 @@ public:
 
     std::chrono::time_point<std::chrono::high_resolution_clock> end = std::chrono::high_resolution_clock::now();
     std::cout << "Time for item " << decorated_item->name() << ", operation size(): "
-            << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()
-            << "ns" << std::endl;
+            << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+            << "ms" << std::endl;
     return result;
   }
 
   void add_child(std::shared_ptr<FileSystemItem> child) override {
     decorated_item->add_child(child);
   }
+};
 
+
+class DelayFileSystemItem: public FileSystemItem {
+private:
+  std::shared_ptr<FileSystemItem> decorated_item;
+  int delay_ms;
+public:
+  DelayFileSystemItem(std::shared_ptr<FileSystemItem> decorated_item, int delay_ms) :
+    FileSystemItem{decorated_item->name()}, decorated_item{decorated_item}, delay_ms{delay_ms} {}
+
+  int size() override {
+    std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
+
+    int result = decorated_item->size();
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(delay_ms));
+    return result;
+  }
+
+  void add_child(std::shared_ptr<FileSystemItem> child) override {
+    decorated_item->add_child(child);
+  }
 };
 
 TEST_CASE("using decorator to measure API calls time") {
   std::stringstream log;
   auto root_dir_real = std::make_shared<Directory>("root");
-  auto root_dir = std::make_shared<TimeMeasureFileSystemItem>(root_dir_real);
+  auto root_dir_delay = std::make_shared<DelayFileSystemItem>(root_dir_real, 20);
+  auto root_dir = std::make_shared<TimeMeasureFileSystemItem>(root_dir_delay);
 
   root_dir->add_child(std::make_shared<File>("config.json", 1000));
   root_dir->add_child(std::make_shared<File>("data.bin", 55000));
