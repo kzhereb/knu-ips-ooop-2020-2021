@@ -116,6 +116,34 @@ public:
 
 };
 
+TEST_CASE("using decorator to log API calls") {
+  std::stringstream log;
+  auto root_dir_real = std::make_shared<Directory>("root");
+  auto root_dir = std::make_shared<LoggingFileSystemItem>(root_dir_real, log);
+
+  root_dir->add_child(std::make_shared<File>("config.json", 1000));
+  root_dir->add_child(std::make_shared<File>("data.bin", 55000));
+
+  auto child_dir = std::make_shared<Directory>("child");
+  child_dir->add_child(std::make_shared<File>("readme.txt", 123));
+  root_dir->add_child(child_dir);
+
+
+
+  CHECK(child_dir->size() == 123);
+  CHECK(root_dir->size() == 56123);
+
+  CHECK(log.str()==std::string(
+          "Trying to add child config.json to item root with children_count = 0\n"
+          "Child added successfully, new children_count = 1\n"
+          "Trying to add child data.bin to item root with children_count = 1\n"
+          "Child added successfully, new children_count = 2\n"
+          "Trying to add child child to item root with children_count = 2\n"
+          "Child added successfully, new children_count = 3\n"
+          "Getting size for root\n"
+          "Size for root is 56123\n"));
+}
+
 
 class TimeMeasureFileSystemItem: public FileSystemItem {
 private:
@@ -194,33 +222,6 @@ TEST_CASE("using decorator to measure API calls time") {
 //          "Size for root is 56123\n"));
 }
 
-TEST_CASE("using decorator to log API calls") {
-	std::stringstream log;
-	auto root_dir_real = std::make_shared<Directory>("root");
-	auto root_dir = std::make_shared<LoggingFileSystemItem>(root_dir_real, log);
-
-	root_dir->add_child(std::make_shared<File>("config.json", 1000));
-	root_dir->add_child(std::make_shared<File>("data.bin", 55000));
-
-	auto child_dir = std::make_shared<Directory>("child");
-	child_dir->add_child(std::make_shared<File>("readme.txt", 123));
-	root_dir->add_child(child_dir);
-
-
-
-	CHECK(child_dir->size() == 123);
-	CHECK(root_dir->size() == 56123);
-
-	CHECK(log.str()==std::string(
-					"Trying to add child config.json to item root with children_count = 0\n"
-					"Child added successfully, new children_count = 1\n"
-					"Trying to add child data.bin to item root with children_count = 1\n"
-					"Child added successfully, new children_count = 2\n"
-					"Trying to add child child to item root with children_count = 2\n"
-					"Child added successfully, new children_count = 3\n"
-					"Getting size for root\n"
-					"Size for root is 56123\n"));
-}
 
 class FileSystemItemFactory {
 public:
