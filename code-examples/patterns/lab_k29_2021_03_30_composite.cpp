@@ -212,25 +212,31 @@ TEST_CASE("using decorator to measure API calls time") {
   CHECK(root_dir->size() == 56123);
 }
 
+//std::shared_ptr<>
+
+std::shared_ptr<FileSystemItem> create_decorated_file(std::string filename, int size) {
+  return std::make_shared<TimeMeasureFileSystemItem>(
+      std::make_shared<DelayFileSystemItem>(
+          std::make_shared<DelayFileSystemItem>(
+              std::make_shared<File>(filename, size), 20), 100));
+}
+
+std::shared_ptr<FileSystemItem> create_decorated_directory(std::string filename) {
+  return std::make_shared<TimeMeasureFileSystemItem>(
+      std::make_shared<DelayFileSystemItem>(
+          std::make_shared<DelayFileSystemItem>(
+              std::make_shared<Directory>(filename), 20), 100));
+}
 
 TEST_CASE("using decorator to measure API calls time, all items decorated") {
   std::stringstream log;
-  auto root_dir_real = std::make_shared<Directory>("root");
-  auto root_dir_delay = std::make_shared<DelayFileSystemItem>(root_dir_real, 20);
-  auto root_dir_delay2 = std::make_shared<DelayFileSystemItem>(root_dir_delay, 100);
-  auto root_dir = std::make_shared<TimeMeasureFileSystemItem>(root_dir_delay2);
+  auto root_dir = create_decorated_directory("root");
 
-  root_dir->add_child(
-      std::make_shared<TimeMeasureFileSystemItem>(
-      std::make_shared<DelayFileSystemItem>(
-      std::make_shared<DelayFileSystemItem>(
-          std::make_shared<File>("config.json", 1000)
-          , 20), 100))
-      );
-  root_dir->add_child(std::make_shared<File>("data.bin", 55000));
+  root_dir->add_child(create_decorated_file("config.json", 1000));
+  root_dir->add_child(create_decorated_file("data.bin", 55000));
 
-  auto child_dir = std::make_shared<Directory>("child");
-  child_dir->add_child(std::make_shared<File>("readme.txt", 123));
+  auto child_dir = create_decorated_directory("child");
+  child_dir->add_child(create_decorated_file("readme.txt", 123));
   root_dir->add_child(child_dir);
 
 
