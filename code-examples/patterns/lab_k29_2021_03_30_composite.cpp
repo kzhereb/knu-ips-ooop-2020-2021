@@ -229,12 +229,18 @@ std::shared_ptr<FileSystemItem> decorate_item(std::shared_ptr<FileSystemItem> re
               real_item, 20), 100));
 }
 
+std::shared_ptr<FileSystemItem> decorate_item_single_delay(std::shared_ptr<FileSystemItem> real_item) {
+  return std::make_shared<TimeMeasureFileSystemItem>(
+      std::make_shared<DelayFileSystemItem>(
+              real_item, 120));
+}
+
 std::shared_ptr<FileSystemItem> create_decorated_file(std::string filename, int size) {
-  return decorate_item(std::make_shared<File>(filename, size));
+  return decorate_item_single_delay(std::make_shared<File>(filename, size));
 }
 
 std::shared_ptr<FileSystemItem> create_decorated_directory(std::string filename) {
-  return decorate_item(std::make_shared<Directory>(filename));
+  return decorate_item_single_delay(std::make_shared<Directory>(filename));
 }
 
 std::shared_ptr<FileSystemItem> create_decorated_file2(std::string filename, int size) {
@@ -250,6 +256,14 @@ std::shared_ptr<FileSystemItem> create_decorated_directory2(std::string filename
 
 TEST_CASE("using decorator to measure API calls time, all items decorated") {
   std::stringstream log;
+  SUBCASE("single delay") {
+    std::cout<<"single delay"<<std::endl;
+    // TODO:
+  }
+  SUBCASE("two delays") {
+    std::cout<<"two delays"<<std::endl;
+    // TODO:
+  }
   auto root_dir = create_decorated_directory("root");
 
   root_dir->add_child(create_decorated_file("config.json", 1000));
