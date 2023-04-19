@@ -214,6 +214,14 @@ TEST_CASE("using decorator to measure API calls time") {
 
 //std::shared_ptr<>
 
+template <typename ItemType, typename... Args>
+std::shared_ptr<FileSystemItem> create_decorated_item(Args... args) {
+  return std::make_shared<TimeMeasureFileSystemItem>(
+      std::make_shared<DelayFileSystemItem>(
+          std::make_shared<DelayFileSystemItem>(
+              std::make_shared<ItemType>(args...), 20), 100));
+}
+
 std::shared_ptr<FileSystemItem> decorate_item(std::shared_ptr<FileSystemItem> real_item) {
   return std::make_shared<TimeMeasureFileSystemItem>(
       std::make_shared<DelayFileSystemItem>(
@@ -227,6 +235,14 @@ std::shared_ptr<FileSystemItem> create_decorated_file(std::string filename, int 
 
 std::shared_ptr<FileSystemItem> create_decorated_directory(std::string filename) {
   return decorate_item(std::make_shared<Directory>(filename));
+}
+
+std::shared_ptr<FileSystemItem> create_decorated_file2(std::string filename, int size) {
+  return create_decorated_item<File>(filename, size);
+}
+
+std::shared_ptr<FileSystemItem> create_decorated_directory2(std::string filename) {
+  return create_decorated_item<Directory>(filename);
 }
 
 
